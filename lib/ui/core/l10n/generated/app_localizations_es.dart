@@ -2416,10 +2416,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get minutes40 => '40 minutos';
 
   @override
-  String get internetAccessTimer => 'Temporizador de acceso a Internet';
+  String get internetAccessTimer => 'Pi-hole timers by Toni';
 
   @override
-  String get internetAccessTimerDescription => 'Duración de la desactivación desde el widget y frecuencia con la que se puede desactivar Pi-hole';
+  String get internetAccessTimerDescription => 'Temporizador del widget, límite de desactivación y duraciones del menú de desactivación';
 
   @override
   String get accessTimerDisableHours => 'Duración de la desactivación desde el widget (horas)';
@@ -2450,6 +2450,17 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String accessTimerCooldownActive(Object remaining) {
     return 'Pi-hole se podrá desactivar de nuevo en $remaining';
+  }
+
+  @override
+  String get accessTimerPresetsTitle => 'Duraciones del menú de desactivación (minutos)';
+
+  @override
+  String get accessTimerPresetsHelper => 'Opciones que aparecen al desactivar Pi-hole desde la app. "Indefinidamente" siempre está disponible.';
+
+  @override
+  String accessTimerPresetLabel(Object number) {
+    return 'Opción $number';
   }
 
   @override

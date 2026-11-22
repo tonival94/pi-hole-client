@@ -4601,13 +4601,13 @@ abstract class AppLocalizations {
   /// No description provided for @internetAccessTimer.
   ///
   /// In en, this message translates to:
-  /// **'Internet access timer'**
+  /// **'Pi-hole timers by Toni'**
   String get internetAccessTimer;
 
   /// No description provided for @internetAccessTimerDescription.
   ///
   /// In en, this message translates to:
-  /// **'Widget disable duration and how often Pi-hole can be disabled'**
+  /// **'Widget timer, disable limit and disable menu durations'**
   String get internetAccessTimerDescription;
 
   /// No description provided for @accessTimerDisableHours.
@@ -4663,6 +4663,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pi-hole can be disabled again in {remaining}'**
   String accessTimerCooldownActive(Object remaining);
+
+  /// No description provided for @accessTimerPresetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable menu durations (minutes)'**
+  String get accessTimerPresetsTitle;
+
+  /// No description provided for @accessTimerPresetsHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Choices shown when you disable Pi-hole from the app. "Indefinitely" is always available.'**
+  String get accessTimerPresetsHelper;
+
+  /// No description provided for @accessTimerPresetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Option {number}'**
+  String accessTimerPresetLabel(Object number);
 
   /// No description provided for @accessTimerNotSupported.
   ///

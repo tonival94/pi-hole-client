@@ -750,8 +750,8 @@
   "minutes10": "10 minutos",
   "minutes20": "20 minutos",
   "minutes40": "40 minutos",
-  "internetAccessTimer": "Temporizador de acceso a Internet",
-  "internetAccessTimerDescription": "Duración de la desactivación desde el widget y frecuencia con la que se puede desactivar Pi-hole",
+  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimerDescription": "Temporizador del widget, límite de desactivación y duraciones del menú de desactivación",
   "accessTimerDisableHours": "Duración de la desactivación desde el widget (horas)",
   "accessTimerDisableHelper": "Al tocar el botón del widget, Pi-hole se desactiva durante estas horas y luego se reactiva automáticamente.",
   "accessTimerCooldownHours": "Se puede desactivar una vez cada (horas)",
@@ -761,5 +761,8 @@
   "accessTimerSaveError": "No se pudo guardar el temporizador de acceso a Internet",
   "accessTimerStatusAvailable": "Pi-hole se puede desactivar ahora",
   "accessTimerCooldownActive": "Pi-hole se podrá desactivar de nuevo en {remaining}",
-  "accessTimerNotSupported": "El temporizador de acceso a Internet solo está disponible en Android"
+  "accessTimerNotSupported": "El temporizador de acceso a Internet solo está disponible en Android",
+  "accessTimerPresetsTitle": "Duraciones del menú de desactivación (minutos)",
+  "accessTimerPresetsHelper": "Opciones que aparecen al desactivar Pi-hole desde la app. \"Indefinidamente\" siempre está disponible.",
+  "accessTimerPresetLabel": "Opción {number}"
 }

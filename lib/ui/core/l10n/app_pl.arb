@@ -749,8 +749,8 @@
   "minutes10": "10 minut",
   "minutes20": "20 minut",
   "minutes40": "40 minut",
-  "internetAccessTimer": "Licznik dostępu do Internetu",
-  "internetAccessTimerDescription": "Czas wyłączenia z widżetu i jak często można wyłączyć Pi-hole",
+  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimerDescription": "Licznik widżetu, limit wyłączeń i czasy w menu wyłączania",
   "accessTimerDisableHours": "Czas wyłączenia z widżetu (godziny)",
   "accessTimerDisableHelper": "Dotknięcie przycisku widżetu wyłącza Pi-hole na tyle godzin, po czym zostaje on automatycznie włączony.",
   "accessTimerCooldownHours": "Można wyłączyć raz na (godziny)",
@@ -760,5 +760,8 @@
   "accessTimerSaveError": "Nie udało się zapisać licznika dostępu do Internetu",
   "accessTimerStatusAvailable": "Pi-hole można teraz wyłączyć",
   "accessTimerCooldownActive": "Pi-hole będzie można ponownie wyłączyć za {remaining}",
-  "accessTimerNotSupported": "Licznik dostępu do Internetu jest dostępny tylko na Androidzie"
+  "accessTimerNotSupported": "Licznik dostępu do Internetu jest dostępny tylko na Androidzie",
+  "accessTimerPresetsTitle": "Czasy w menu wyłączania (minuty)",
+  "accessTimerPresetsHelper": "Opcje wyświetlane przy wyłączaniu Pi-hole w aplikacji. „Bezterminowo” jest zawsze dostępne.",
+  "accessTimerPresetLabel": "Opcja {number}"
 }

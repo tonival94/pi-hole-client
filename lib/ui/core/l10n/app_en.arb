@@ -749,8 +749,8 @@
   "minutes10": "10 minutes",
   "minutes20": "20 minutes",
   "minutes40": "40 minutes",
-  "internetAccessTimer": "Internet access timer",
-  "internetAccessTimerDescription": "Widget disable duration and how often Pi-hole can be disabled",
+  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimerDescription": "Widget timer, disable limit and disable menu durations",
   "accessTimerDisableHours": "Widget disable duration (hours)",
   "accessTimerDisableHelper": "Tapping the widget button disables Pi-hole for this many hours, then it is re-enabled automatically.",
   "accessTimerCooldownHours": "Can be disabled once every (hours)",
@@ -760,5 +760,8 @@
   "accessTimerSaveError": "Could not save the Internet access timer",
   "accessTimerStatusAvailable": "Pi-hole can be disabled now",
   "accessTimerCooldownActive": "Pi-hole can be disabled again in {remaining}",
-  "accessTimerNotSupported": "The Internet access timer is available only on Android"
+  "accessTimerNotSupported": "The Internet access timer is available only on Android",
+  "accessTimerPresetsTitle": "Disable menu durations (minutes)",
+  "accessTimerPresetsHelper": "Choices shown when you disable Pi-hole from the app. \"Indefinitely\" is always available.",
+  "accessTimerPresetLabel": "Option {number}"
 }

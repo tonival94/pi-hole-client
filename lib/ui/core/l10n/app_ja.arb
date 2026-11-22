@@ -751,8 +751,8 @@
   "minutes10": "10分",
   "minutes20": "20分",
   "minutes40": "40分",
-  "internetAccessTimer": "インターネットアクセスタイマー",
-  "internetAccessTimerDescription": "ウィジェットからの無効化時間とPi-holeを無効化できる頻度",
+  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimerDescription": "ウィジェットのタイマー、無効化の制限、無効化メニューの時間",
   "accessTimerDisableHours": "ウィジェットからの無効化時間（時間）",
   "accessTimerDisableHelper": "ウィジェットのボタンをタップすると、この時間だけPi-holeが無効になり、その後自動的に再有効化されます。",
   "accessTimerCooldownHours": "無効化できる間隔（時間）",
@@ -762,5 +762,8 @@
   "accessTimerSaveError": "インターネットアクセスタイマーを保存できませんでした",
   "accessTimerStatusAvailable": "今すぐPi-holeを無効化できます",
   "accessTimerCooldownActive": "Pi-holeは{remaining}後に再び無効化できます",
-  "accessTimerNotSupported": "インターネットアクセスタイマーはAndroidでのみ利用できます"
+  "accessTimerNotSupported": "インターネットアクセスタイマーはAndroidでのみ利用できます",
+  "accessTimerPresetsTitle": "無効化メニューの時間（分）",
+  "accessTimerPresetsHelper": "アプリからPi-holeを無効化するときに表示される選択肢です。「無期限」は常に選べます。",
+  "accessTimerPresetLabel": "選択肢 {number}"
 }

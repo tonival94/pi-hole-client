@@ -6,10 +6,11 @@ import 'package:pi_hole_client/ui/core/view_models/app_config_viewmodel.dart';
 import 'package:pi_hole_client/utils/access_timer.dart';
 import 'package:provider/provider.dart';
 
-/// Settings > App > Internet access timer.
+/// Settings > App > "Pi-hole timers by Toni".
 ///
 /// X = how long a disable from the widget lasts (hours).
 /// Y = Pi-hole can be disabled at most once every Y hours (0 = no limit).
+/// Durations (minutes) offered by the app's disable menu.
 class AccessTimerScreen extends StatefulWidget {
   const AccessTimerScreen({super.key});
 
@@ -20,6 +21,10 @@ class AccessTimerScreen extends StatefulWidget {
 class _AccessTimerScreenState extends State<AccessTimerScreen> {
   final TextEditingController _disableController = TextEditingController();
   final TextEditingController _cooldownController = TextEditingController();
+  final List<TextEditingController> _presetControllers = List.generate(
+    AccessTimer.disablePresetsCount,
+    (_) => TextEditingController(),
+  );
   AccessTimerState? _state;
   bool _saving = false;
 
@@ -33,6 +38,9 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
   void dispose() {
     _disableController.dispose();
     _cooldownController.dispose();
+    for (final c in _presetControllers) {
+      c.dispose();
+    }
     super.dispose();
   }
 
@@ -43,6 +51,9 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
       _state = state;
       _disableController.text = state.disableHours.toString();
       _cooldownController.text = state.cooldownHours.toString();
+      for (var i = 0; i < _presetControllers.length; i++) {
+        _presetControllers[i].text = state.disablePresetsMinutes[i].toString();
+      }
     });
   }
 
@@ -64,16 +75,33 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
     AccessTimer.maxCooldownHours,
   );
 
+  int? _presetMinutes(int index) => _parse(
+    _presetControllers[index].text,
+    AccessTimer.minPresetMinutes,
+    AccessTimer.maxPresetMinutes,
+  );
+
+  bool get _presetsValid => List.generate(
+    _presetControllers.length,
+    _presetMinutes,
+  ).every((v) => v != null);
+
   Future<void> _save() async {
     final disableHours = _disableHours;
     final cooldownHours = _cooldownHours;
-    if (disableHours == null || cooldownHours == null) return;
+    if (disableHours == null || cooldownHours == null || !_presetsValid) {
+      return;
+    }
+    final presets =
+        List.generate(_presetControllers.length, (i) => _presetMinutes(i)!)
+          ..sort();
 
     FocusScope.of(context).unfocus();
     setState(() => _saving = true);
     final ok = await AccessTimer.set(
       disableHours: disableHours,
       cooldownHours: cooldownHours,
+      disablePresetsMinutes: presets,
     );
     if (!mounted) return;
     setState(() => _saving = false);
@@ -96,13 +124,13 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
     }
   }
 
-  Widget _hoursField({
+  Widget _numberField({
     required TextEditingController controller,
     required String label,
-    required String helper,
     required int min,
     required int max,
     required bool valid,
+    String? helper,
   }) {
     final loc = AppLocalizations.of(context);
     return Padding(
@@ -162,7 +190,7 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          _hoursField(
+          _numberField(
             controller: _disableController,
             label: loc.accessTimerDisableHours,
             helper: loc.accessTimerDisableHelper,
@@ -170,7 +198,7 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
             max: AccessTimer.maxDisableHours,
             valid: disableValid,
           ),
-          _hoursField(
+          _numberField(
             controller: _cooldownController,
             label: loc.accessTimerCooldownHours,
             helper: loc.accessTimerCooldownHelper,
@@ -179,9 +207,31 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
             valid: cooldownValid,
           ),
           Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+            child: Text(
+              loc.accessTimerPresetsTitle,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: Text(
+              loc.accessTimerPresetsHelper,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+          for (var i = 0; i < _presetControllers.length; i++)
+            _numberField(
+              controller: _presetControllers[i],
+              label: loc.accessTimerPresetLabel(i + 1),
+              min: AccessTimer.minPresetMinutes,
+              max: AccessTimer.maxPresetMinutes,
+              valid: _presetMinutes(i) != null,
+            ),
+          Padding(
             padding: const EdgeInsets.all(16),
             child: FilledButton(
-              onPressed: disableValid && cooldownValid && !_saving
+              onPressed: disableValid && cooldownValid && _presetsValid && !_saving
                   ? _save
                   : null,
               child: Text(loc.save),

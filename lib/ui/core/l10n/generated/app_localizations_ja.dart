@@ -2314,10 +2314,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get minutes40 => '40分';
 
   @override
-  String get internetAccessTimer => 'インターネットアクセスタイマー';
+  String get internetAccessTimer => 'Pi-hole timers by Toni';
 
   @override
-  String get internetAccessTimerDescription => 'ウィジェットからの無効化時間とPi-holeを無効化できる頻度';
+  String get internetAccessTimerDescription => 'ウィジェットのタイマー、無効化の制限、無効化メニューの時間';
 
   @override
   String get accessTimerDisableHours => 'ウィジェットからの無効化時間（時間）';
@@ -2348,6 +2348,17 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String accessTimerCooldownActive(Object remaining) {
     return 'Pi-holeは$remaining後に再び無効化できます';
+  }
+
+  @override
+  String get accessTimerPresetsTitle => '無効化メニューの時間（分）';
+
+  @override
+  String get accessTimerPresetsHelper => 'アプリからPi-holeを無効化するときに表示される選択肢です。「無期限」は常に選べます。';
+
+  @override
+  String accessTimerPresetLabel(Object number) {
+    return '選択肢 $number';
   }
 
   @override

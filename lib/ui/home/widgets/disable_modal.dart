@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pi_hole_client/ui/core/l10n/generated/app_localizations.dart';
 import 'package:pi_hole_client/ui/core/ui/components/option_box.dart';
+import 'package:pi_hole_client/utils/access_timer.dart';
 
 class DisableModal extends StatefulWidget {
   const DisableModal({
@@ -27,13 +28,31 @@ class _DisableOption {
 class _DisableModalState extends State<DisableModal> {
   int? selectedOption;
 
-  static final List<_DisableOption> _options = [
-    _DisableOption(600, (loc) => loc.minutes10),
-    _DisableOption(1200, (loc) => loc.minutes20),
-    _DisableOption(2400, (loc) => loc.minutes40),
-    _DisableOption(3600, (loc) => loc.hour1),
+  /// Timed options come from Settings > "Pi-hole timers by Toni";
+  /// "indefinitely" is always the last one.
+  List<_DisableOption> _options = _buildOptions(
+    AccessTimer.defaultDisablePresetsMinutes,
+  );
+
+  static List<_DisableOption> _buildOptions(List<int> presetsMinutes) => [
+    for (final m in presetsMinutes)
+      _DisableOption(m * 60, (loc) => AccessTimer.formatMinutes(m, loc)),
     _DisableOption(0, (loc) => loc.indefinitely),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPresets();
+  }
+
+  Future<void> _loadPresets() async {
+    final state = await AccessTimer.get();
+    if (!mounted) return;
+    setState(() {
+      _options = _buildOptions(state.disablePresetsMinutes);
+    });
+  }
 
   void _updateRadioValue(int? value) {
     setState(() {

@@ -22,6 +22,7 @@ class AccessTimerPrefs private constructor(context: Context) {
         private const val KEY_DISABLE_HOURS = "disable_hours"
         private const val KEY_COOLDOWN_HOURS = "cooldown_hours"
         private const val KEY_LAST_DISABLE_AT_MS = "last_disable_at_ms"
+        private const val KEY_DISABLE_PRESETS_MIN = "disable_presets_min"
 
         const val DEFAULT_DISABLE_HOURS = 1
         const val DEFAULT_COOLDOWN_HOURS = 4
@@ -29,6 +30,12 @@ class AccessTimerPrefs private constructor(context: Context) {
         const val MAX_DISABLE_HOURS = 24
         const val MIN_COOLDOWN_HOURS = 0
         const val MAX_COOLDOWN_HOURS = 168
+
+        /** Durations (minutes) offered by the app's disable menu. */
+        val DEFAULT_DISABLE_PRESETS_MIN = listOf(10, 20, 40, 60)
+        const val DISABLE_PRESETS_COUNT = 4
+        const val MIN_PRESET_MIN = 1
+        const val MAX_PRESET_MIN = 1440
 
         private const val HOUR_MS = 3_600_000L
 
@@ -57,6 +64,22 @@ class AccessTimerPrefs private constructor(context: Context) {
 
     val disableSeconds: Long
         get() = disableHours * 3600L
+
+    /** Durations in minutes shown in the app's disable menu ("indefinitely" is always added). */
+    val disablePresetsMinutes: List<Int>
+        get() {
+            val parsed = prefs.getString(KEY_DISABLE_PRESETS_MIN, null)
+                ?.split(",")
+                ?.mapNotNull { it.trim().toIntOrNull() }
+                ?.filter { it in MIN_PRESET_MIN..MAX_PRESET_MIN }
+            return if (parsed != null && parsed.size == DISABLE_PRESETS_COUNT) parsed else DEFAULT_DISABLE_PRESETS_MIN
+        }
+
+    fun setDisablePresetsMinutes(minutes: List<Int>) {
+        val clean = minutes.map { it.coerceIn(MIN_PRESET_MIN, MAX_PRESET_MIN) }.sorted()
+        if (clean.size != DISABLE_PRESETS_COUNT) return
+        prefs.edit().putString(KEY_DISABLE_PRESETS_MIN, clean.joinToString(",")).commit()
+    }
 
     fun setHours(disableHours: Int, cooldownHours: Int) {
         prefs.edit()

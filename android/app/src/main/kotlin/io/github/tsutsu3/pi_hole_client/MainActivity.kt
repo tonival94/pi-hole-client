@@ -129,6 +129,7 @@ class MainActivity : FlutterFragmentActivity() {
                             "disableHours" to timer.disableHours,
                             "cooldownHours" to timer.cooldownHours,
                             "cooldownRemainingMs" to timer.cooldownRemainingMs(),
+                            "disablePresetsMinutes" to timer.disablePresetsMinutes,
                         ),
                     )
                 }
@@ -140,7 +141,11 @@ class MainActivity : FlutterFragmentActivity() {
                         result.error("invalid_args", "disableHours and cooldownHours are required", null)
                         return@setMethodCallHandler
                     }
-                    AccessTimerPrefs.getInstance(this).setHours(disableHours, cooldownHours)
+                    val timer = AccessTimerPrefs.getInstance(this)
+                    timer.setHours(disableHours, cooldownHours)
+                    call.argument<List<Int>>("disablePresetsMinutes")?.let {
+                        timer.setDisablePresetsMinutes(it)
+                    }
                     result.success(null)
                 }
 

@@ -1,11 +1,20 @@
 name: Build APK (Pi-hole Timer)
 
+# Builds the APK on every push to access-timer and publishes it as a GitHub
+# Release (direct .apk download, works with Obtainium).
+#
+# Signing: the only secret is KEYSTORE_PASSWORD (Settings > Secrets and
+# variables > Actions). On the first run the workflow creates the signing key,
+# encrypts it with that password and commits it as signing/upload.jks.enc.
+# Every later build decrypts and uses the same key, so new versions install as
+# updates. Without the secret the APK is signed with a throw-away debug key and
+# no Release is published.
+
 on:
   workflow_dispatch:
   push:
     branches:
       - access-timer
-      - main
     paths:
       - android/**
       - lib/**
@@ -17,11 +26,19 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      KSPASS: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: upload
+      ENC_KEYSTORE: signing/upload.jks.enc
+      KEYSTORE: android/app/upload.jks
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -42,21 +59,46 @@ jobs:
       - name: Prepare env file
         run: cp .env.sample .env
 
-      # Optional: with the KEYSTORE_JKS and KEY_PROPERTIES secrets the APK is
-      # signed with your own key, so new builds install as updates. Without
-      # them the debug key is used (uninstall before installing a new build).
-      - name: Restore signing key (optional)
-        env:
-          KEYSTORE_JKS: ${{ secrets.KEYSTORE_JKS }}
-          KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+      - name: Prepare signing key
+        id: signing
         run: |
-          if [ -n "$KEYSTORE_JKS" ] && [ -n "$KEY_PROPERTIES" ]; then
-            echo "$KEYSTORE_JKS" | base64 --decode > android/app/keystore.jks
-            echo "$KEY_PROPERTIES" | base64 --decode > android/key.properties
-            echo "Using release signing key"
-          else
-            echo "No signing secrets: using debug key"
+          if [ -z "$KSPASS" ]; then
+            echo "KEYSTORE_PASSWORD secret not set: using the debug key, no release"
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          if [ ! -f "$ENC_KEYSTORE" ]; then
+            echo "No signing key yet: creating one"
+            keytool -genkeypair -noprompt -keystore "$KEYSTORE" -storetype PKCS12 \
+              -alias "$KEY_ALIAS" -keyalg RSA -keysize 4096 -validity 36500 \
+              -dname "CN=Pi-hole Timer, O=tonival94" \
+              -storepass:env KSPASS -keypass:env KSPASS
+            mkdir -p "$(dirname "$ENC_KEYSTORE")"
+            openssl enc -aes-256-cbc -pbkdf2 -iter 600000 -salt \
+              -in "$KEYSTORE" -out "$ENC_KEYSTORE" -pass env:KSPASS
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add "$ENC_KEYSTORE"
+            git commit -m "chore: add encrypted signing key [skip ci]"
+            git push
+          else
+            openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 \
+              -in "$ENC_KEYSTORE" -out "$KEYSTORE" -pass env:KSPASS
+          fi
+          {
+            echo "storeFile=upload.jks"
+            echo "keyAlias=$KEY_ALIAS"
+            echo "storePassword=$KSPASS"
+            echo "keyPassword=$KSPASS"
+          } > android/key.properties
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Version
+        id: version
+        run: |
+          BASE=$(grep '^version:' pubspec.yaml | sed 's/version: //; s/+.*//')
+          echo "name=${BASE}-timer.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
+          echo "code=$((1000 + ${{ github.run_number }}))" >> "$GITHUB_OUTPUT"
 
       - name: Install dependencies
         run: flutter pub get
@@ -68,11 +110,30 @@ jobs:
         run: flutter analyze --no-fatal-infos --no-fatal-warnings lib
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          flutter build apk --release --target-platform android-arm64 \
+            --build-name="${{ steps.version.outputs.name }}" \
+            --build-number="${{ steps.version.outputs.code }}"
+          mv build/app/outputs/flutter-apk/app-release.apk \
+            "pihole-timer-${{ steps.version.outputs.name }}.apk"
+
+      - name: Remove signing files
+        if: always()
+        run: rm -f android/key.properties "$KEYSTORE"
 
       - name: Upload APK
         uses: actions/upload-artifact@v7
         with:
           name: pihole-timer-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: pihole-timer-*.apk
           retention-days: 30
+
+      - name: Publish release
+        if: steps.signing.outputs.signed == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.name }}
+          name: Pi-hole Timer ${{ steps.version.outputs.name }}
+          target_commitish: ${{ github.sha }}
+          files: pihole-timer-*.apk
+          make_latest: true

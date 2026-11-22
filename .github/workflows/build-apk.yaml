@@ -8,7 +8,7 @@ name: Build APK (Pi-hole Timer)
 # encrypts it with that password and commits it as signing/upload.jks.enc.
 # Every later build decrypts and uses the same key, so new versions install as
 # updates. Without the secret the APK is signed with a throw-away debug key and
-# no Release is published.
+# no Release is published. Obtainium: add github.com/tonival94/pi-hole-client.
 
 on:
   workflow_dispatch:

@@ -31,7 +31,7 @@ class AccessTimer {
   static const MethodChannel _channel = MethodChannel('pihole/widget');
 
   static const defaultDisableHours = 1;
-  static const defaultCooldownHours = 24;
+  static const defaultCooldownHours = 4;
   static const minDisableHours = 1;
   static const maxDisableHours = 24;
   static const minCooldownHours = 0;

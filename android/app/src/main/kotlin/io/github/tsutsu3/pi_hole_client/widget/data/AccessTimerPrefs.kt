@@ -24,7 +24,7 @@ class AccessTimerPrefs private constructor(context: Context) {
         private const val KEY_LAST_DISABLE_AT_MS = "last_disable_at_ms"
 
         const val DEFAULT_DISABLE_HOURS = 1
-        const val DEFAULT_COOLDOWN_HOURS = 24
+        const val DEFAULT_COOLDOWN_HOURS = 4
         const val MIN_DISABLE_HOURS = 1
         const val MAX_DISABLE_HOURS = 24
         const val MIN_COOLDOWN_HOURS = 0

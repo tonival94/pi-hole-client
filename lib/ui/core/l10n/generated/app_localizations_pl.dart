@@ -2388,4 +2388,53 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get writeEmailDetails =>
       'W treści e-maila umieść wszystkie możliwe szczegóły: wersję Pi-hole i interfejsu sieciowego, sposób odtworzenia problemu, zrzuty ekranu...\n\nWszystkie dostarczone informacje będą bardzo mile widziane.';
+
+  @override
+  String get minutes10 => '10 minut';
+
+  @override
+  String get minutes20 => '20 minut';
+
+  @override
+  String get minutes40 => '40 minut';
+
+  @override
+  String get internetAccessTimer => 'Licznik dostępu do Internetu';
+
+  @override
+  String get internetAccessTimerDescription => 'Czas wyłączenia z widżetu i jak często można wyłączyć Pi-hole';
+
+  @override
+  String get accessTimerDisableHours => 'Czas wyłączenia z widżetu (godziny)';
+
+  @override
+  String get accessTimerDisableHelper => 'Dotknięcie przycisku widżetu wyłącza Pi-hole na tyle godzin, po czym zostaje on automatycznie włączony.';
+
+  @override
+  String get accessTimerCooldownHours => 'Można wyłączyć raz na (godziny)';
+
+  @override
+  String get accessTimerCooldownHelper => 'Dotyczy widżetu i aplikacji, liczone od początku poprzedniego wyłączenia. Ponowne włączenie jest zawsze możliwe. 0 = bez limitu.';
+
+  @override
+  String accessTimerInvalidRange(Object min, Object max) {
+    return 'Wpisz liczbę całkowitą od $min do $max';
+  }
+
+  @override
+  String get accessTimerSaved => 'Zapisano licznik dostępu do Internetu';
+
+  @override
+  String get accessTimerSaveError => 'Nie udało się zapisać licznika dostępu do Internetu';
+
+  @override
+  String get accessTimerStatusAvailable => 'Pi-hole można teraz wyłączyć';
+
+  @override
+  String accessTimerCooldownActive(Object remaining) {
+    return 'Pi-hole będzie można ponownie wyłączyć za $remaining';
+  }
+
+  @override
+  String get accessTimerNotSupported => 'Licznik dostępu do Internetu jest dostępny tylko na Androidzie';
 }

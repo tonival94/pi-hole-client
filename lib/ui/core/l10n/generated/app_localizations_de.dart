@@ -2409,4 +2409,53 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get writeEmailDetails =>
       'Die Email sollte im Optimalfall folgende Infos enthalten: Pi-hole und Web Interface Version, wie kann der Fehler reproduziert werden, Screenshots...\n\nFür alle Informationen sind wir sehr dankbar.';
+
+  @override
+  String get minutes10 => '10 Minuten';
+
+  @override
+  String get minutes20 => '20 Minuten';
+
+  @override
+  String get minutes40 => '40 Minuten';
+
+  @override
+  String get internetAccessTimer => 'Internetzugangs-Timer';
+
+  @override
+  String get internetAccessTimerDescription => 'Deaktivierungsdauer des Widgets und wie oft Pi-hole deaktiviert werden kann';
+
+  @override
+  String get accessTimerDisableHours => 'Deaktivierungsdauer über das Widget (Stunden)';
+
+  @override
+  String get accessTimerDisableHelper => 'Ein Tippen auf die Widget-Schaltfläche deaktiviert Pi-hole für diese Anzahl Stunden, danach wird es automatisch wieder aktiviert.';
+
+  @override
+  String get accessTimerCooldownHours => 'Deaktivierbar einmal alle (Stunden)';
+
+  @override
+  String get accessTimerCooldownHelper => 'Gilt für Widget und App, gezählt ab Beginn der vorherigen Deaktivierung. Wieder aktivieren ist immer möglich. 0 = keine Begrenzung.';
+
+  @override
+  String accessTimerInvalidRange(Object min, Object max) {
+    return 'Gib eine ganze Zahl zwischen $min und $max ein';
+  }
+
+  @override
+  String get accessTimerSaved => 'Internetzugangs-Timer gespeichert';
+
+  @override
+  String get accessTimerSaveError => 'Internetzugangs-Timer konnte nicht gespeichert werden';
+
+  @override
+  String get accessTimerStatusAvailable => 'Pi-hole kann jetzt deaktiviert werden';
+
+  @override
+  String accessTimerCooldownActive(Object remaining) {
+    return 'Pi-hole kann in $remaining wieder deaktiviert werden';
+  }
+
+  @override
+  String get accessTimerNotSupported => 'Der Internetzugangs-Timer ist nur unter Android verfügbar';
 }

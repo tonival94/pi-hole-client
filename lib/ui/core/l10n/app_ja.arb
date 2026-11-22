@@ -747,5 +747,20 @@
   "websiteTitle": "Webサイト",
   "welcomeToApp": "アプリへようこそ",
   "writeEmail": "メールで私に書いてください。",
-  "writeEmailDetails": "メール本文には可能な限り詳細を記載してください：Pi-holeおよびWebインターフェースのバージョン、問題の再現方法、スクリーンショットなど。\n\n提供される情報はすべて歓迎します。"
+  "writeEmailDetails": "メール本文には可能な限り詳細を記載してください：Pi-holeおよびWebインターフェースのバージョン、問題の再現方法、スクリーンショットなど。\n\n提供される情報はすべて歓迎します。",
+  "minutes10": "10分",
+  "minutes20": "20分",
+  "minutes40": "40分",
+  "internetAccessTimer": "インターネットアクセスタイマー",
+  "internetAccessTimerDescription": "ウィジェットからの無効化時間とPi-holeを無効化できる頻度",
+  "accessTimerDisableHours": "ウィジェットからの無効化時間（時間）",
+  "accessTimerDisableHelper": "ウィジェットのボタンをタップすると、この時間だけPi-holeが無効になり、その後自動的に再有効化されます。",
+  "accessTimerCooldownHours": "無効化できる間隔（時間）",
+  "accessTimerCooldownHelper": "ウィジェットとアプリの両方に適用され、前回の無効化開始時から数えます。再有効化はいつでも可能です。0 = 制限なし。",
+  "accessTimerInvalidRange": "{min}から{max}までの整数を入力してください",
+  "accessTimerSaved": "インターネットアクセスタイマーを保存しました",
+  "accessTimerSaveError": "インターネットアクセスタイマーを保存できませんでした",
+  "accessTimerStatusAvailable": "今すぐPi-holeを無効化できます",
+  "accessTimerCooldownActive": "Pi-holeは{remaining}後に再び無効化できます",
+  "accessTimerNotSupported": "インターネットアクセスタイマーはAndroidでのみ利用できます"
 }

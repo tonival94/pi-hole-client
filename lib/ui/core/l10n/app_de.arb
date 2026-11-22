@@ -745,5 +745,20 @@
   "websiteTitle": "Webseite",
   "welcomeToApp": "Willkommen in der App",
   "writeEmail": "Schreiben Sie mir per E-Mail.",
-  "writeEmailDetails": "Die Email sollte im Optimalfall folgende Infos enthalten: Pi-hole und Web Interface Version, wie kann der Fehler reproduziert werden, Screenshots...\n\nFür alle Informationen sind wir sehr dankbar."
+  "writeEmailDetails": "Die Email sollte im Optimalfall folgende Infos enthalten: Pi-hole und Web Interface Version, wie kann der Fehler reproduziert werden, Screenshots...\n\nFür alle Informationen sind wir sehr dankbar.",
+  "minutes10": "10 Minuten",
+  "minutes20": "20 Minuten",
+  "minutes40": "40 Minuten",
+  "internetAccessTimer": "Internetzugangs-Timer",
+  "internetAccessTimerDescription": "Deaktivierungsdauer des Widgets und wie oft Pi-hole deaktiviert werden kann",
+  "accessTimerDisableHours": "Deaktivierungsdauer über das Widget (Stunden)",
+  "accessTimerDisableHelper": "Ein Tippen auf die Widget-Schaltfläche deaktiviert Pi-hole für diese Anzahl Stunden, danach wird es automatisch wieder aktiviert.",
+  "accessTimerCooldownHours": "Deaktivierbar einmal alle (Stunden)",
+  "accessTimerCooldownHelper": "Gilt für Widget und App, gezählt ab Beginn der vorherigen Deaktivierung. Wieder aktivieren ist immer möglich. 0 = keine Begrenzung.",
+  "accessTimerInvalidRange": "Gib eine ganze Zahl zwischen {min} und {max} ein",
+  "accessTimerSaved": "Internetzugangs-Timer gespeichert",
+  "accessTimerSaveError": "Internetzugangs-Timer konnte nicht gespeichert werden",
+  "accessTimerStatusAvailable": "Pi-hole kann jetzt deaktiviert werden",
+  "accessTimerCooldownActive": "Pi-hole kann in {remaining} wieder deaktiviert werden",
+  "accessTimerNotSupported": "Der Internetzugangs-Timer ist nur unter Android verfügbar"
 }

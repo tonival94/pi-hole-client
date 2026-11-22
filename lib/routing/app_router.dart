@@ -27,6 +27,7 @@ import 'package:pi_hole_client/ui/settings/app_settings/advanced_settings/widget
 import 'package:pi_hole_client/ui/settings/app_settings/advanced_settings/widgets/log_refresh_interval_screen.dart';
 import 'package:pi_hole_client/ui/settings/app_settings/advanced_settings/widgets/logs_quantity_load_screen.dart';
 import 'package:pi_hole_client/ui/settings/app_settings/advanced_settings/widgets/reset_screen.dart';
+import 'package:pi_hole_client/ui/settings/app_settings/widgets/access_timer_screen.dart';
 import 'package:pi_hole_client/ui/settings/app_settings/widgets/advanced_options_screen.dart';
 import 'package:pi_hole_client/ui/settings/app_settings/widgets/language_screen.dart';
 import 'package:pi_hole_client/ui/settings/app_settings/widgets/theme_screen.dart';
@@ -222,6 +223,11 @@ GoRouter createAppRouter({
                         path: '/settings/app/servers',
                         name: Routes.settingsAppServers,
                         builder: (context, state) => const ServersScreen(),
+                      ),
+                      GoRoute(
+                        path: '/settings/app/access-timer',
+                        name: Routes.settingsAppAccessTimer,
+                        builder: (context, state) => const AccessTimerScreen(),
                       ),
                       GoRoute(
                         path: '/settings/app/advanced',

@@ -746,5 +746,20 @@
   "websiteTitle": "Sitio web",
   "welcomeToApp": "Bienvenido a la aplicación",
   "writeEmail": "Escríbeme por correo electrónico.",
-  "writeEmailDetails": "Incluye en el cuerpo del correo todos los detalles posibles: Pi-hole y versión de la interfaz web, cómo reproducir el problema, capturas de pantalla...\n\nToda la información proporcionada será muy bienvenida."
+  "writeEmailDetails": "Incluye en el cuerpo del correo todos los detalles posibles: Pi-hole y versión de la interfaz web, cómo reproducir el problema, capturas de pantalla...\n\nToda la información proporcionada será muy bienvenida.",
+  "minutes10": "10 minutos",
+  "minutes20": "20 minutos",
+  "minutes40": "40 minutos",
+  "internetAccessTimer": "Temporizador de acceso a Internet",
+  "internetAccessTimerDescription": "Duración de la desactivación desde el widget y frecuencia con la que se puede desactivar Pi-hole",
+  "accessTimerDisableHours": "Duración de la desactivación desde el widget (horas)",
+  "accessTimerDisableHelper": "Al tocar el botón del widget, Pi-hole se desactiva durante estas horas y luego se reactiva automáticamente.",
+  "accessTimerCooldownHours": "Se puede desactivar una vez cada (horas)",
+  "accessTimerCooldownHelper": "Se aplica al widget y a la app, contando desde el inicio de la desactivación anterior. Reactivar siempre está permitido. 0 = sin límite.",
+  "accessTimerInvalidRange": "Introduce un número entero entre {min} y {max}",
+  "accessTimerSaved": "Temporizador de acceso a Internet guardado",
+  "accessTimerSaveError": "No se pudo guardar el temporizador de acceso a Internet",
+  "accessTimerStatusAvailable": "Pi-hole se puede desactivar ahora",
+  "accessTimerCooldownActive": "Pi-hole se podrá desactivar de nuevo en {remaining}",
+  "accessTimerNotSupported": "El temporizador de acceso a Internet solo está disponible en Android"
 }

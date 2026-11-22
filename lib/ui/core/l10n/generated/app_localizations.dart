@@ -4579,6 +4579,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Include on the body of the email all the possible details: Pi-hole and web interface version, how to reproduce the issue, screenshots...\n\nAll provided information will be very welcome.'**
   String get writeEmailDetails;
+
+  /// No description provided for @minutes10.
+  ///
+  /// In en, this message translates to:
+  /// **'10 minutes'**
+  String get minutes10;
+
+  /// No description provided for @minutes20.
+  ///
+  /// In en, this message translates to:
+  /// **'20 minutes'**
+  String get minutes20;
+
+  /// No description provided for @minutes40.
+  ///
+  /// In en, this message translates to:
+  /// **'40 minutes'**
+  String get minutes40;
+
+  /// No description provided for @internetAccessTimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet access timer'**
+  String get internetAccessTimer;
+
+  /// No description provided for @internetAccessTimerDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Widget disable duration and how often Pi-hole can be disabled'**
+  String get internetAccessTimerDescription;
+
+  /// No description provided for @accessTimerDisableHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Widget disable duration (hours)'**
+  String get accessTimerDisableHours;
+
+  /// No description provided for @accessTimerDisableHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Tapping the widget button disables Pi-hole for this many hours, then it is re-enabled automatically.'**
+  String get accessTimerDisableHelper;
+
+  /// No description provided for @accessTimerCooldownHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Can be disabled once every (hours)'**
+  String get accessTimerCooldownHours;
+
+  /// No description provided for @accessTimerCooldownHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Applies to both the widget and the app, counted from the start of the previous disable. Re-enabling is always allowed. 0 = no limit.'**
+  String get accessTimerCooldownHelper;
+
+  /// No description provided for @accessTimerInvalidRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number between {min} and {max}'**
+  String accessTimerInvalidRange(Object min, Object max);
+
+  /// No description provided for @accessTimerSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet access timer saved'**
+  String get accessTimerSaved;
+
+  /// No description provided for @accessTimerSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the Internet access timer'**
+  String get accessTimerSaveError;
+
+  /// No description provided for @accessTimerStatusAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Pi-hole can be disabled now'**
+  String get accessTimerStatusAvailable;
+
+  /// No description provided for @accessTimerCooldownActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Pi-hole can be disabled again in {remaining}'**
+  String accessTimerCooldownActive(Object remaining);
+
+  /// No description provided for @accessTimerNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'The Internet access timer is available only on Android'**
+  String get accessTimerNotSupported;
 }
 
 class _AppLocalizationsDelegate

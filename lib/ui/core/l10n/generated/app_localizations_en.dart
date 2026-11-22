@@ -2366,4 +2366,53 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get writeEmailDetails =>
       'Include on the body of the email all the possible details: Pi-hole and web interface version, how to reproduce the issue, screenshots...\n\nAll provided information will be very welcome.';
+
+  @override
+  String get minutes10 => '10 minutes';
+
+  @override
+  String get minutes20 => '20 minutes';
+
+  @override
+  String get minutes40 => '40 minutes';
+
+  @override
+  String get internetAccessTimer => 'Internet access timer';
+
+  @override
+  String get internetAccessTimerDescription => 'Widget disable duration and how often Pi-hole can be disabled';
+
+  @override
+  String get accessTimerDisableHours => 'Widget disable duration (hours)';
+
+  @override
+  String get accessTimerDisableHelper => 'Tapping the widget button disables Pi-hole for this many hours, then it is re-enabled automatically.';
+
+  @override
+  String get accessTimerCooldownHours => 'Can be disabled once every (hours)';
+
+  @override
+  String get accessTimerCooldownHelper => 'Applies to both the widget and the app, counted from the start of the previous disable. Re-enabling is always allowed. 0 = no limit.';
+
+  @override
+  String accessTimerInvalidRange(Object min, Object max) {
+    return 'Enter a whole number between $min and $max';
+  }
+
+  @override
+  String get accessTimerSaved => 'Internet access timer saved';
+
+  @override
+  String get accessTimerSaveError => 'Could not save the Internet access timer';
+
+  @override
+  String get accessTimerStatusAvailable => 'Pi-hole can be disabled now';
+
+  @override
+  String accessTimerCooldownActive(Object remaining) {
+    return 'Pi-hole can be disabled again in $remaining';
+  }
+
+  @override
+  String get accessTimerNotSupported => 'The Internet access timer is available only on Android';
 }

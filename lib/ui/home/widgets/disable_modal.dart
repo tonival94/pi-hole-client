@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:pi_hole_client/ui/core/l10n/generated/app_localizations.dart';
 import 'package:pi_hole_client/ui/core/ui/components/option_box.dart';
@@ -17,75 +16,77 @@ class DisableModal extends StatefulWidget {
   State<DisableModal> createState() => _DisableModalState();
 }
 
+class _DisableOption {
+  const _DisableOption(this.seconds, this.labelBuilder);
+
+  /// Disable duration in seconds; 0 means indefinitely.
+  final int seconds;
+  final String Function(AppLocalizations) labelBuilder;
+}
+
 class _DisableModalState extends State<DisableModal> {
   int? selectedOption;
-  TextEditingController customTimeController = TextEditingController();
-  bool customTimeIsValid = false;
 
-  final ExpandableController expandableController = ExpandableController();
+  static final List<_DisableOption> _options = [
+    _DisableOption(600, (loc) => loc.minutes10),
+    _DisableOption(1200, (loc) => loc.minutes20),
+    _DisableOption(2400, (loc) => loc.minutes40),
+    _DisableOption(3600, (loc) => loc.hour1),
+    _DisableOption(0, (loc) => loc.indefinitely),
+  ];
 
   void _updateRadioValue(int? value) {
     setState(() {
       selectedOption = value;
-      if (selectedOption != 5) {
-        customTimeController.text = '';
-        if (expandableController.expanded) expandableController.toggle();
-      } else if (!expandableController.expanded) {
-        expandableController.toggle();
-      }
     });
   }
 
-  void _validateCustomMinutes(String value) {
-    if (int.tryParse(value) != null) {
-      setState(() {
-        customTimeIsValid = true;
-      });
-    } else {
-      setState(() {
-        customTimeIsValid = false;
-      });
-    }
-  }
+  bool _selectionIsValid() => selectedOption != null;
 
-  bool _selectionIsValid() {
-    if (selectedOption != null && selectedOption != 5) {
-      return true;
-    } else if (selectedOption == 5 && customTimeIsValid) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  int _getTime() {
-    switch (selectedOption) {
-      case 0:
-        return 30;
-
-      case 1:
-        return 60;
-
-      case 2:
-        return 120;
-
-      case 3:
-        return 300;
-
-      case 4:
-        return 0;
-
-      case 5:
-        return int.parse(customTimeController.text) * 60;
-
-      default:
-        return 0;
-    }
-  }
+  int _getTime() =>
+      selectedOption == null ? 0 : _options[selectedOption!].seconds;
 
   @override
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
+    final loc = AppLocalizations.of(context);
+
+    Widget optionBox(int index) {
+      final isLast = index == _options.length - 1;
+      final isLeft = index.isEven;
+      final isFirstRow = index < 2;
+
+      return FractionallySizedBox(
+        // The last option (indefinitely) takes the full width of its row.
+        widthFactor: isLast ? 1 : 0.5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: isFirstRow ? 0 : 8,
+            left: isLeft ? 16 : 8,
+            right: isLeft && !isLast ? 8 : 16,
+            bottom: isLast ? 0 : 8,
+          ),
+          child: OptionBox(
+            optionsValue: selectedOption,
+            itemValue: index,
+            onTap: _updateRadioValue,
+            child: Center(
+              child: AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 250),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: selectedOption == index
+                      ? Theme.of(context).colorScheme.onSecondaryContainer
+                      : Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                child: Text(_options[index].labelBuilder(loc)),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     Widget options() {
       return Wrap(
@@ -106,7 +107,7 @@ class _DisableModalState extends State<DisableModal> {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Text(
-                      AppLocalizations.of(context).disable,
+                      loc.disable,
                       style: const TextStyle(fontSize: 24),
                     ),
                   ),
@@ -114,304 +115,63 @@ class _DisableModalState extends State<DisableModal> {
               ),
             ],
           ),
-          FractionallySizedBox(
-            widthFactor: 0.5,
-            child: Container(
-              padding: const EdgeInsets.only(left: 16, right: 8, bottom: 8),
-              child: OptionBox(
-                optionsValue: selectedOption,
-                itemValue: 0,
-                onTap: _updateRadioValue,
-                child: Center(
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 250),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: selectedOption == 0
-                          ? Theme.of(context).colorScheme.onSecondaryContainer
-                          : Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    child: Text(AppLocalizations.of(context).seconds30),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.5,
-            child: Container(
-              padding: const EdgeInsets.only(right: 16, left: 8, bottom: 8),
-              child: OptionBox(
-                optionsValue: selectedOption,
-                itemValue: 1,
-                onTap: _updateRadioValue,
-                child: Center(
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 250),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: selectedOption == 1
-                          ? Theme.of(context).colorScheme.onSecondaryContainer
-                          : Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    child: Text(AppLocalizations.of(context).minute1),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.5,
-            child: Container(
-              padding: const EdgeInsets.only(
-                top: 8,
-                left: 16,
-                right: 8,
-                bottom: 8,
-              ),
-              child: OptionBox(
-                optionsValue: selectedOption,
-                itemValue: 2,
-                onTap: _updateRadioValue,
-                child: Center(
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 250),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: selectedOption == 2
-                          ? Theme.of(context).colorScheme.onSecondaryContainer
-                          : Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    child: Text(AppLocalizations.of(context).minutes2),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.5,
-            child: Container(
-              padding: const EdgeInsets.only(
-                top: 8,
-                left: 8,
-                right: 16,
-                bottom: 8,
-              ),
-              child: OptionBox(
-                optionsValue: selectedOption,
-                itemValue: 3,
-                onTap: _updateRadioValue,
-                child: Center(
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 250),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: selectedOption == 3
-                          ? Theme.of(context).colorScheme.onSecondaryContainer
-                          : Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    child: Text(AppLocalizations.of(context).minutes5),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.5,
-            child: Container(
-              padding: const EdgeInsets.only(top: 8, left: 16, right: 8),
-              child: OptionBox(
-                optionsValue: selectedOption,
-                itemValue: 4,
-                onTap: _updateRadioValue,
-                child: Center(
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 250),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: selectedOption == 4
-                          ? Theme.of(context).colorScheme.onSecondaryContainer
-                          : Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    child: Text(AppLocalizations.of(context).indefinitely),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.5,
-            child: Container(
-              padding: const EdgeInsets.only(top: 8, left: 8, right: 16),
-              child: OptionBox(
-                optionsValue: selectedOption,
-                itemValue: 5,
-                onTap: _updateRadioValue,
-                child: Center(
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 250),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: selectedOption == 5
-                          ? Theme.of(context).colorScheme.onSecondaryContainer
-                          : Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                    child: Text(AppLocalizations.of(context).custom),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          for (var i = 0; i < _options.length; i++) optionBox(i),
         ],
       );
     }
 
-    Widget inputField() {
+    Widget buttons() {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const SizedBox(height: 25),
-            TextField(
-              onChanged: _validateCustomMinutes,
-              controller: customTimeController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                errorText: !customTimeIsValid && customTimeController.text != ''
-                    ? AppLocalizations.of(context).valueNotValid
-                    : null,
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                labelText: AppLocalizations.of(context).customMinutes,
+            TextButton(
+              onPressed: () => Navigator.maybePop(context),
+              child: Text(loc.cancel),
+            ),
+            const SizedBox(width: 20),
+            TextButton(
+              onPressed: _selectionIsValid()
+                  ? () {
+                      Navigator.maybePop(context);
+                      widget.onDisable(_getTime());
+                    }
+                  : null,
+              style: ButtonStyle(
+                foregroundColor: _selectionIsValid()
+                    ? WidgetStateProperty.all(
+                        Theme.of(context).colorScheme.primary,
+                      )
+                    : WidgetStateProperty.all(Colors.grey),
               ),
+              child: Text(loc.accept),
             ),
           ],
         ),
       );
     }
 
+    final content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(child: SingleChildScrollView(child: options())),
+        buttons(),
+      ],
+    );
+
     if (widget.window) {
       return Dialog(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 500),
-          child: Padding(
-            padding: mediaQueryData.viewInsets,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Wrap(
-                      children: [
-                        ExpandableNotifier(
-                          controller: expandableController,
-                          child: Expandable(
-                            collapsed: options(),
-                            expanded: Column(
-                              children: [options(), inputField()],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.maybePop(context),
-                        child: Text(AppLocalizations.of(context).cancel),
-                      ),
-                      const SizedBox(width: 20),
-                      TextButton(
-                        onPressed: _selectionIsValid()
-                            ? () {
-                                Navigator.maybePop(context);
-                                widget.onDisable(_getTime());
-                              }
-                            : null,
-                        style: ButtonStyle(
-                          foregroundColor: _selectionIsValid()
-                              ? WidgetStateProperty.all(
-                                  Theme.of(context).colorScheme.primary,
-                                )
-                              : WidgetStateProperty.all(Colors.grey),
-                        ),
-                        child: Text(AppLocalizations.of(context).accept),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Padding(
-        padding: mediaQueryData.viewInsets,
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: SingleChildScrollView(
-                  child: Wrap(
-                    children: [
-                      ExpandableNotifier(
-                        controller: expandableController,
-                        child: Expandable(
-                          collapsed: options(),
-                          expanded: Column(children: [options(), inputField()]),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.maybePop(context),
-                      child: Text(AppLocalizations.of(context).cancel),
-                    ),
-                    const SizedBox(width: 20),
-                    TextButton(
-                      onPressed: _selectionIsValid()
-                          ? () {
-                              Navigator.maybePop(context);
-                              widget.onDisable(_getTime());
-                            }
-                          : null,
-                      style: ButtonStyle(
-                        foregroundColor: _selectionIsValid()
-                            ? WidgetStateProperty.all(
-                                Theme.of(context).colorScheme.primary,
-                              )
-                            : WidgetStateProperty.all(Colors.grey),
-                      ),
-                      child: Text(AppLocalizations.of(context).accept),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          child: Padding(padding: mediaQueryData.viewInsets, child: content),
         ),
       );
     }
+
+    return Padding(
+      padding: mediaQueryData.viewInsets,
+      child: SafeArea(child: content),
+    );
   }
 }

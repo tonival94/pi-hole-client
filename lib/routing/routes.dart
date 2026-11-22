@@ -34,6 +34,7 @@ abstract class Routes {
   static const settingsAppLanguage = 'settings/app/language';
   static const settingsAppServers = 'settings/app/servers';
   static const settingsAppAdvanced = 'settings/app/advanced';
+  static const settingsAppAccessTimer = 'settings/app/access-timer';
 
   // ===== Settings > App > Advanced sub-routes =====
   static const settingsAppAdvancedChartVisualization =

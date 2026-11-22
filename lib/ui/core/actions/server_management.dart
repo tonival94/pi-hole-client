@@ -6,6 +6,7 @@ import 'package:pi_hole_client/ui/core/ui/helpers/snackbar.dart';
 import 'package:pi_hole_client/ui/core/ui/modals/process_modal.dart';
 import 'package:pi_hole_client/ui/core/view_models/app_config_viewmodel.dart';
 import 'package:pi_hole_client/ui/core/view_models/servers_viewmodel.dart';
+import 'package:pi_hole_client/utils/access_timer.dart';
 import 'package:pi_hole_client/utils/widget_channel.dart';
 import 'package:provider/provider.dart';
 
@@ -69,9 +70,26 @@ Future<void> disableServer(int time, BuildContext context) async {
 
   final serverAddress = serversViewModel.selectedServer?.address;
 
+  // Internet access timer: Pi-hole can be disabled at most once every Y hours.
+  final accessTimer = await AccessTimer.get();
+  if (!context.mounted) return;
+  if (!accessTimer.canDisable) {
+    showErrorSnackBar(
+      context: context,
+      appConfigViewModel: appConfigViewModel,
+      label: AppLocalizations.of(context).accessTimerCooldownActive(
+        AccessTimer.formatRemaining(accessTimer.cooldownRemaining),
+      ),
+    );
+    return;
+  }
+
   final process = ProcessModal(context: context);
   process.open(AppLocalizations.of(context).disablingServer);
   final result = await bundle.dns.disableBlocking(time);
+  if (result.isSuccess()) {
+    await AccessTimer.recordDisable();
+  }
   process.close();
 
   if (!context.mounted) return;

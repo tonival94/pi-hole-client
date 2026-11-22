@@ -1,0 +1,75 @@
+name: Build APK (Pi-hole Timer)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - access-timer
+      - main
+    paths:
+      - android/**
+      - lib/**
+      - assets/**
+      - pubspec.yaml
+      - pubspec.lock
+      - l10n.yaml
+      - .github/workflows/build-apk.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+          flutter-version: 3.47.9
+
+      - name: Prepare env file
+        run: cp .env.sample .env
+
+      # Optional: with the KEYSTORE_JKS and KEY_PROPERTIES secrets the APK is
+      # signed with your own key, so new builds install as updates. Without
+      # them the debug key is used (uninstall before installing a new build).
+      - name: Restore signing key (optional)
+        env:
+          KEYSTORE_JKS: ${{ secrets.KEYSTORE_JKS }}
+          KEY_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+        run: |
+          if [ -n "$KEYSTORE_JKS" ] && [ -n "$KEY_PROPERTIES" ]; then
+            echo "$KEYSTORE_JKS" | base64 --decode > android/app/keystore.jks
+            echo "$KEY_PROPERTIES" | base64 --decode > android/key.properties
+            echo "Using release signing key"
+          else
+            echo "No signing secrets: using debug key"
+          fi
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings lib
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: pihole-timer-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30

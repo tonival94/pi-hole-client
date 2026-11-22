@@ -2303,4 +2303,53 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get writeEmailDetails =>
       'メール本文には可能な限り詳細を記載してください：Pi-holeおよびWebインターフェースのバージョン、問題の再現方法、スクリーンショットなど。\n\n提供される情報はすべて歓迎します。';
+
+  @override
+  String get minutes10 => '10分';
+
+  @override
+  String get minutes20 => '20分';
+
+  @override
+  String get minutes40 => '40分';
+
+  @override
+  String get internetAccessTimer => 'インターネットアクセスタイマー';
+
+  @override
+  String get internetAccessTimerDescription => 'ウィジェットからの無効化時間とPi-holeを無効化できる頻度';
+
+  @override
+  String get accessTimerDisableHours => 'ウィジェットからの無効化時間（時間）';
+
+  @override
+  String get accessTimerDisableHelper => 'ウィジェットのボタンをタップすると、この時間だけPi-holeが無効になり、その後自動的に再有効化されます。';
+
+  @override
+  String get accessTimerCooldownHours => '無効化できる間隔（時間）';
+
+  @override
+  String get accessTimerCooldownHelper => 'ウィジェットとアプリの両方に適用され、前回の無効化開始時から数えます。再有効化はいつでも可能です。0 = 制限なし。';
+
+  @override
+  String accessTimerInvalidRange(Object min, Object max) {
+    return '$minから$maxまでの整数を入力してください';
+  }
+
+  @override
+  String get accessTimerSaved => 'インターネットアクセスタイマーを保存しました';
+
+  @override
+  String get accessTimerSaveError => 'インターネットアクセスタイマーを保存できませんでした';
+
+  @override
+  String get accessTimerStatusAvailable => '今すぐPi-holeを無効化できます';
+
+  @override
+  String accessTimerCooldownActive(Object remaining) {
+    return 'Pi-holeは$remaining後に再び無効化できます';
+  }
+
+  @override
+  String get accessTimerNotSupported => 'インターネットアクセスタイマーはAndroidでのみ利用できます';
 }

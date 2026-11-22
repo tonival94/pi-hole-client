@@ -8,6 +8,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import androidx.work.ExistingWorkPolicy
 import io.github.tsutsu3.pi_hole_client.widget.WidgetUpdateHelper
+import io.github.tsutsu3.pi_hole_client.widget.data.AccessTimerPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetServer
 
@@ -117,6 +118,33 @@ class MainActivity : FlutterFragmentActivity() {
                     if (delaySeconds > 0) {
                         WidgetUpdateHelper.scheduleDelayedRefresh(this, serverId, delaySeconds.toLong())
                     }
+                    result.success(null)
+                }
+
+                "getAccessTimer" -> {
+                    val timer = AccessTimerPrefs.getInstance(this)
+                    result.success(
+                        mapOf(
+                            "disableHours" to timer.disableHours,
+                            "cooldownHours" to timer.cooldownHours,
+                            "cooldownRemainingMs" to timer.cooldownRemainingMs(),
+                        ),
+                    )
+                }
+
+                "setAccessTimer" -> {
+                    val disableHours = call.argument<Int>("disableHours")
+                    val cooldownHours = call.argument<Int>("cooldownHours")
+                    if (disableHours == null || cooldownHours == null) {
+                        result.error("invalid_args", "disableHours and cooldownHours are required", null)
+                        return@setMethodCallHandler
+                    }
+                    AccessTimerPrefs.getInstance(this).setHours(disableHours, cooldownHours)
+                    result.success(null)
+                }
+
+                "recordAccessTimerDisable" -> {
+                    AccessTimerPrefs.getInstance(this).recordDisable()
                     result.success(null)
                 }
 

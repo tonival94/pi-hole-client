@@ -3,11 +3,15 @@ package io.github.tsutsu3.pi_hole_client.widget.worker
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import io.github.tsutsu3.pi_hole_client.R
 import io.github.tsutsu3.pi_hole_client.widget.WidgetConstants
 import io.github.tsutsu3.pi_hole_client.widget.WidgetDebugConfig
 import io.github.tsutsu3.pi_hole_client.widget.WidgetUpdateHelper
@@ -16,6 +20,7 @@ import io.github.tsutsu3.pi_hole_client.widget.common.piholeUrl
 import io.github.tsutsu3.pi_hole_client.widget.common.ToggleWidgetState
 import io.github.tsutsu3.pi_hole_client.widget.common.WidgetStatus
 import io.github.tsutsu3.pi_hole_client.widget.common.parseBlockingStatus
+import io.github.tsutsu3.pi_hole_client.widget.data.AccessTimerPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.updateFromToggle
 import io.github.tsutsu3.pi_hole_client.widget.data.updateStatusFrom
@@ -102,9 +107,29 @@ class ServerToggleWorker(
             val currentBlocking = JSONObject(statusResp.body).optString("blocking")
             val nextBlocking = currentBlocking != "enabled"
 
+            // Internet access timer: a disable lasts X hours and is allowed at
+            // most once every Y hours. Re-enabling is always allowed.
+            val accessTimer = AccessTimerPrefs.getInstance(applicationContext)
+            if (!nextBlocking) {
+                val remainingMs = accessTimer.cooldownRemainingMs()
+                if (remainingMs > 0L) {
+                    showCooldownToast(remainingMs)
+                    broadcast(
+                        serverId,
+                        prefs,
+                        ToggleWidgetState(serverId, server.alias, parseBlockingStatus(currentBlocking), true),
+                    )
+                    return Result.success()
+                }
+            }
+
             val body = JSONObject()
             body.put("blocking", nextBlocking)
-            body.put("timer", JSONObject.NULL)
+            if (nextBlocking) {
+                body.put("timer", JSONObject.NULL)
+            } else {
+                body.put("timer", accessTimer.disableSeconds)
+            }
             val toggleResp = client.post(piholeUrl(server.address, "/api/dns/blocking"), sid, body.toString())
 
             if (PiHoleApiClient.isAuthFailure(toggleResp.statusCode)) {
@@ -124,6 +149,15 @@ class ServerToggleWorker(
             broadcast(serverId, prefs, ToggleWidgetState(serverId, server.alias, finalStatus, true))
 
             if (toggleResp.statusCode in 200..299) {
+                if (!nextBlocking) {
+                    accessTimer.recordDisable()
+                    // Refresh widgets when Pi-hole re-enables itself after X hours.
+                    WidgetUpdateHelper.scheduleDelayedRefresh(
+                        applicationContext,
+                        serverId,
+                        accessTimer.disableSeconds,
+                    )
+                }
                 // Immediately reflect the new blocking state in Stats and Compact widgets
                 // so they update in sync with the Toggle widget without waiting for PADD.
                 broadcastStatusToStatsWidgets(serverId, prefs, finalStatus)
@@ -177,6 +211,17 @@ class ServerToggleWorker(
             val glanceId = runCatching { glanceManager.getGlanceIdBy(widgetId) }.getOrNull() ?: continue
             updateAppWidgetState(applicationContext, glanceId) { it.updateStatusFrom(status) }
             CompactGlanceWidget().update(applicationContext, glanceId)
+        }
+    }
+
+    private fun showCooldownToast(remainingMs: Long) {
+        val totalMinutes = ((remainingMs + 59_999L) / 60_000L).coerceAtLeast(1L)
+        val hours = totalMinutes / 60
+        val minutes = totalMinutes % 60
+        val remaining = if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m"
+        val message = applicationContext.getString(R.string.access_timer_cooldown_toast, remaining)
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
         }
     }
 

@@ -745,5 +745,20 @@
   "websiteTitle": "Strona internetowa",
   "welcomeToApp": "Witaj w aplikacji",
   "writeEmail": "Napisz do mnie na e-mail.",
-  "writeEmailDetails": "W treści e-maila umieść wszystkie możliwe szczegóły: wersję Pi-hole i interfejsu sieciowego, sposób odtworzenia problemu, zrzuty ekranu...\n\nWszystkie dostarczone informacje będą bardzo mile widziane."
+  "writeEmailDetails": "W treści e-maila umieść wszystkie możliwe szczegóły: wersję Pi-hole i interfejsu sieciowego, sposób odtworzenia problemu, zrzuty ekranu...\n\nWszystkie dostarczone informacje będą bardzo mile widziane.",
+  "minutes10": "10 minut",
+  "minutes20": "20 minut",
+  "minutes40": "40 minut",
+  "internetAccessTimer": "Licznik dostępu do Internetu",
+  "internetAccessTimerDescription": "Czas wyłączenia z widżetu i jak często można wyłączyć Pi-hole",
+  "accessTimerDisableHours": "Czas wyłączenia z widżetu (godziny)",
+  "accessTimerDisableHelper": "Dotknięcie przycisku widżetu wyłącza Pi-hole na tyle godzin, po czym zostaje on automatycznie włączony.",
+  "accessTimerCooldownHours": "Można wyłączyć raz na (godziny)",
+  "accessTimerCooldownHelper": "Dotyczy widżetu i aplikacji, liczone od początku poprzedniego wyłączenia. Ponowne włączenie jest zawsze możliwe. 0 = bez limitu.",
+  "accessTimerInvalidRange": "Wpisz liczbę całkowitą od {min} do {max}",
+  "accessTimerSaved": "Zapisano licznik dostępu do Internetu",
+  "accessTimerSaveError": "Nie udało się zapisać licznika dostępu do Internetu",
+  "accessTimerStatusAvailable": "Pi-hole można teraz wyłączyć",
+  "accessTimerCooldownActive": "Pi-hole będzie można ponownie wyłączyć za {remaining}",
+  "accessTimerNotSupported": "Licznik dostępu do Internetu jest dostępny tylko na Androidzie"
 }

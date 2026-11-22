@@ -271,7 +271,7 @@ void main() async {
         await tester.pumpAndSettle(const Duration(seconds: 3));
 
         expect(find.byType(DisableModal), findsOneWidget);
-        await tester.tap(find.text('30 seconds').last);
+        await tester.tap(find.text('10 minutes').last);
         await tester.pump();
         await tester.tap(find.text('Accept').last);
         await tester.pump();

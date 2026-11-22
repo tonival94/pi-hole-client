@@ -745,5 +745,20 @@
   "websiteTitle": "Website",
   "welcomeToApp": "Welcome to the App",
   "writeEmail": "Write me by email.",
-  "writeEmailDetails": "Include on the body of the email all the possible details: Pi-hole and web interface version, how to reproduce the issue, screenshots...\n\nAll provided information will be very welcome."
+  "writeEmailDetails": "Include on the body of the email all the possible details: Pi-hole and web interface version, how to reproduce the issue, screenshots...\n\nAll provided information will be very welcome.",
+  "minutes10": "10 minutes",
+  "minutes20": "20 minutes",
+  "minutes40": "40 minutes",
+  "internetAccessTimer": "Internet access timer",
+  "internetAccessTimerDescription": "Widget disable duration and how often Pi-hole can be disabled",
+  "accessTimerDisableHours": "Widget disable duration (hours)",
+  "accessTimerDisableHelper": "Tapping the widget button disables Pi-hole for this many hours, then it is re-enabled automatically.",
+  "accessTimerCooldownHours": "Can be disabled once every (hours)",
+  "accessTimerCooldownHelper": "Applies to both the widget and the app, counted from the start of the previous disable. Re-enabling is always allowed. 0 = no limit.",
+  "accessTimerInvalidRange": "Enter a whole number between {min} and {max}",
+  "accessTimerSaved": "Internet access timer saved",
+  "accessTimerSaveError": "Could not save the Internet access timer",
+  "accessTimerStatusAvailable": "Pi-hole can be disabled now",
+  "accessTimerCooldownActive": "Pi-hole can be disabled again in {remaining}",
+  "accessTimerNotSupported": "The Internet access timer is available only on Android"
 }

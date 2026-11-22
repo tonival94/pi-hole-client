@@ -2405,4 +2405,53 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get writeEmailDetails =>
       'Incluye en el cuerpo del correo todos los detalles posibles: Pi-hole y versión de la interfaz web, cómo reproducir el problema, capturas de pantalla...\n\nToda la información proporcionada será muy bienvenida.';
+
+  @override
+  String get minutes10 => '10 minutos';
+
+  @override
+  String get minutes20 => '20 minutos';
+
+  @override
+  String get minutes40 => '40 minutos';
+
+  @override
+  String get internetAccessTimer => 'Temporizador de acceso a Internet';
+
+  @override
+  String get internetAccessTimerDescription => 'Duración de la desactivación desde el widget y frecuencia con la que se puede desactivar Pi-hole';
+
+  @override
+  String get accessTimerDisableHours => 'Duración de la desactivación desde el widget (horas)';
+
+  @override
+  String get accessTimerDisableHelper => 'Al tocar el botón del widget, Pi-hole se desactiva durante estas horas y luego se reactiva automáticamente.';
+
+  @override
+  String get accessTimerCooldownHours => 'Se puede desactivar una vez cada (horas)';
+
+  @override
+  String get accessTimerCooldownHelper => 'Se aplica al widget y a la app, contando desde el inicio de la desactivación anterior. Reactivar siempre está permitido. 0 = sin límite.';
+
+  @override
+  String accessTimerInvalidRange(Object min, Object max) {
+    return 'Introduce un número entero entre $min y $max';
+  }
+
+  @override
+  String get accessTimerSaved => 'Temporizador de acceso a Internet guardado';
+
+  @override
+  String get accessTimerSaveError => 'No se pudo guardar el temporizador de acceso a Internet';
+
+  @override
+  String get accessTimerStatusAvailable => 'Pi-hole se puede desactivar ahora';
+
+  @override
+  String accessTimerCooldownActive(Object remaining) {
+    return 'Pi-hole se podrá desactivar de nuevo en $remaining';
+  }
+
+  @override
+  String get accessTimerNotSupported => 'El temporizador de acceso a Internet solo está disponible en Android';
 }

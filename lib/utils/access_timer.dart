@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:pi_hole_client/ui/core/l10n/generated/app_localizations.dart';
 import 'package:pi_hole_client/utils/logger.dart';
 
@@ -139,5 +140,23 @@ class AccessTimer {
       return hours == 1 ? loc.hour1 : '$hours ${loc.hours}';
     }
     return '$minutes ${loc.minutes}';
+  }
+
+  /// Asks for the notification permission (Android 13+).
+  ///
+  /// Android hides toasts from apps in the background when their
+  /// notifications are off, so without it the widget's "can be disabled again
+  /// in ..." message never shows up. Asks only while the user has not
+  /// refused permanently.
+  static Future<void> requestNotificationPermission() async {
+    if (!isSupported) return;
+    try {
+      final status = await Permission.notification.status;
+      if (status.isDenied) {
+        await Permission.notification.request();
+      }
+    } catch (e) {
+      logger.w('AccessTimer notification permission failed: $e');
+    }
   }
 }

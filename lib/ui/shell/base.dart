@@ -12,6 +12,7 @@ import 'package:pi_hole_client/ui/core/ui/modals/start_warning_modal.dart';
 import 'package:pi_hole_client/ui/core/view_models/app_config_viewmodel.dart';
 import 'package:pi_hole_client/ui/core/view_models/servers_viewmodel.dart';
 import 'package:pi_hole_client/ui/core/view_models/status_viewmodel.dart';
+import 'package:pi_hole_client/utils/access_timer.dart';
 import 'package:pi_hole_client/utils/exceptions.dart';
 import 'package:pi_hole_client/utils/logger.dart';
 import 'package:pi_hole_client/utils/widget_channel.dart';
@@ -69,6 +70,10 @@ class _BaseState extends State<Base>
         );
         if (!mounted) return;
       }
+
+      // Needed for the widget's cooldown message (Pi-hole timers by Toni).
+      await AccessTimer.requestNotificationPermission();
+      if (!mounted) return;
 
       if (serversViewModel.selectedServer != null) {
         await _fetchAndUpdateStatus();

@@ -119,7 +119,12 @@ jobs:
 
       - name: Widget unit tests
         working-directory: android
-        run: ./gradlew :app:testDebugUnitTest --tests "io.github.tsutsu3.pi_hole_client.widget.*"
+        # Fresh Gradle daemon with more heap: the one left by the release
+        # build runs out of memory while transforming the debug Flutter jars.
+        run: |
+          ./gradlew --stop
+          ./gradlew -Dorg.gradle.jvmargs="-Xmx6g -XX:MaxMetaspaceSize=2g" \
+            :app:testDebugUnitTest --tests "io.github.tsutsu3.pi_hole_client.widget.*"
 
       - name: Remove signing files
         if: always()

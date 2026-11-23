@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pi_hole_client/ui/core/l10n/generated/app_localizations.dart';
@@ -107,6 +108,7 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
           ..sort();
 
     FocusScope.of(context).unfocus();
+    final before = _formValues();
     setState(() => _saving = true);
     final ok = await AccessTimer.set(
       disableHours: disableHours,
@@ -124,7 +126,14 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
         appConfigViewModel: appConfigViewModel,
         label: loc.accessTimerSaved,
       );
-      await _load();
+      if (listEquals(before, _formValues())) {
+        // Show the saved values (durations sorted).
+        await _load();
+      } else {
+        // The form changed while saving: keep the edits, refresh the status.
+        final state = await AccessTimer.get();
+        if (mounted) setState(() => _state = state);
+      }
     } else {
       showErrorSnackBar(
         context: context,
@@ -133,6 +142,14 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
       );
     }
   }
+
+  /// What the form shows now, to tell whether it changed during a save.
+  List<Object> _formValues() => [
+    _autoEnable,
+    _disableController.text,
+    _cooldownController.text,
+    for (final c in _presetControllers) c.text,
+  ];
 
   Widget _numberField({
     required TextEditingController controller,

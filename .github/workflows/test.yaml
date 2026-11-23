@@ -205,7 +205,8 @@ jobs:
     # needs: [test, integration-test]
     needs: [coverage]
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() }}
+    # Sonar needs the SONAR_TOKEN of the original repository: skip it on forks.
+    if: ${{ !cancelled() && github.repository == 'tsutsu3/pi-hole-client' }}
 
     steps:
       - uses: actions/checkout@v7

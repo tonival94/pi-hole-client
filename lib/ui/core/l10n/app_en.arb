@@ -764,5 +764,7 @@
   "accessTimerPresetsTitle": "Disable menu durations (minutes)",
   "accessTimerPresetsHelper": "Choices shown when you disable Pi-hole from the app. \"Indefinitely\" is always available.",
   "accessTimerPresetLabel": "Option {number}",
-  "accessTimerUnreachable": "Pi-hole is unreachable. Check your connection."
+  "accessTimerUnreachable": "Pi-hole is unreachable. Check your connection.",
+  "accessTimerAutoEnable": "Re-enable automatically",
+  "accessTimerAutoEnableHelper": "When off, the widget disables Pi-hole indefinitely: it stays disabled until you enable it."
 }

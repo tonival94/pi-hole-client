@@ -4670,6 +4670,18 @@ abstract class AppLocalizations {
   /// **'Pi-hole is unreachable. Check your connection.'**
   String get accessTimerUnreachable;
 
+  /// No description provided for @accessTimerAutoEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enable automatically'**
+  String get accessTimerAutoEnable;
+
+  /// No description provided for @accessTimerAutoEnableHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'When off, the widget disables Pi-hole indefinitely: it stays disabled until you enable it.'**
+  String get accessTimerAutoEnableHelper;
+
   /// No description provided for @accessTimerPresetsTitle.
   ///
   /// In en, this message translates to:

@@ -2456,6 +2456,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accessTimerUnreachable => 'Pi-hole no está disponible. Comprueba tu conexión.';
 
   @override
+  String get accessTimerAutoEnable => 'Reactivar automáticamente';
+
+  @override
+  String get accessTimerAutoEnableHelper => 'Si está apagado, el widget desactiva Pi-hole indefinidamente: sigue desactivado hasta que lo actives.';
+
+  @override
   String get accessTimerPresetsTitle => 'Duraciones del menú de desactivación (minutos)';
 
   @override

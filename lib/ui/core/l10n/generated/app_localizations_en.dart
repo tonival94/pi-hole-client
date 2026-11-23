@@ -2417,6 +2417,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessTimerUnreachable => 'Pi-hole is unreachable. Check your connection.';
 
   @override
+  String get accessTimerAutoEnable => 'Re-enable automatically';
+
+  @override
+  String get accessTimerAutoEnableHelper => 'When off, the widget disables Pi-hole indefinitely: it stays disabled until you enable it.';
+
+  @override
   String get accessTimerPresetsTitle => 'Disable menu durations (minutes)';
 
   @override

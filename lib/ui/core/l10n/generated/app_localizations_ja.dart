@@ -2354,6 +2354,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get accessTimerUnreachable => 'Pi-holeに接続できません。接続を確認してください。';
 
   @override
+  String get accessTimerAutoEnable => '自動的に再有効化';
+
+  @override
+  String get accessTimerAutoEnableHelper => 'オフの場合、ウィジェットはPi-holeを無期限に無効化します。有効にするまで無効のままです。';
+
+  @override
   String get accessTimerPresetsTitle => '無効化メニューの時間（分）';
 
   @override

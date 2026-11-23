@@ -12,6 +12,10 @@ name: Build APK (Pi-hole Timer)
 
 on:
   workflow_dispatch:
+  # PRs into access-timer: build and test only, no release.
+  pull_request:
+    branches:
+      - access-timer
   push:
     branches:
       - access-timer
@@ -138,7 +142,7 @@ jobs:
           retention-days: 30
 
       - name: Publish release
-        if: steps.signing.outputs.signed == 'true'
+        if: steps.signing.outputs.signed == 'true' && github.event_name != 'pull_request'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.name }}

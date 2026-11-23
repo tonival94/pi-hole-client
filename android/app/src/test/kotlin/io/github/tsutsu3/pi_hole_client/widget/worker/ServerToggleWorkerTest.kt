@@ -50,6 +50,8 @@ class ServerToggleWorkerTest {
         mockkObject(WidgetUpdateHelper)
         every { WidgetUpdateHelper.enqueueServerPadd(any(), any(), any()) } returns Unit
         every { WidgetUpdateHelper.refreshWidgetsForServer(any(), any(), any(), any(), any()) } returns Unit
+        // Access timer: a disable schedules the refresh for when Pi-hole re-enables itself.
+        every { WidgetUpdateHelper.scheduleDelayedRefresh(any(), any(), any()) } returns Unit
     }
 
     @After

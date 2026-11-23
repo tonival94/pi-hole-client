@@ -2439,6 +2439,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get accessTimerUnreachable => 'Pi-hole jest niedostępny. Sprawdź połączenie.';
 
   @override
+  String get accessTimerAutoEnable => 'Włącz ponownie automatycznie';
+
+  @override
+  String get accessTimerAutoEnableHelper => 'Gdy opcja jest wyłączona, widżet wyłącza Pi-hole bezterminowo: pozostaje wyłączony, dopóki go nie włączysz.';
+
+  @override
   String get accessTimerPresetsTitle => 'Czasy w menu wyłączania (minuty)';
 
   @override

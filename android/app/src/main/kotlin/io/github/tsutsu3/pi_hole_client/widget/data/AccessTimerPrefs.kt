@@ -12,6 +12,7 @@ import io.github.tsutsu3.pi_hole_client.widget.common.WidgetStatus
  * Settings and state of the "Internet access timer".
  *
  * - [disableHours] (X): how long a disable triggered from a widget lasts.
+ *   0 = indefinitely (Pi-hole stays disabled until enabled by hand).
  * - [cooldownHours] (Y): Pi-hole can be disabled at most once every Y hours,
  *   counted from the start of the previous disable. 0 means no limit.
  * - last disable timestamp: shared by widgets and app, so the limit applies
@@ -32,7 +33,8 @@ class AccessTimerPrefs private constructor(context: Context) {
 
         const val DEFAULT_DISABLE_HOURS = 1
         const val DEFAULT_COOLDOWN_HOURS = 4
-        const val MIN_DISABLE_HOURS = 1
+        /** 0 = indefinitely. */
+        const val MIN_DISABLE_HOURS = 0
         const val MAX_DISABLE_HOURS = 24
         const val MIN_COOLDOWN_HOURS = 0
         const val MAX_COOLDOWN_HOURS = 168

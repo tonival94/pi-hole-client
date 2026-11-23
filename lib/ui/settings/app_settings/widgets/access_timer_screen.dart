@@ -20,6 +20,9 @@ class AccessTimerScreen extends StatefulWidget {
 
 class _AccessTimerScreenState extends State<AccessTimerScreen> {
   final TextEditingController _disableController = TextEditingController();
+
+  /// X > 0: the widget re-enables Pi-hole after X hours. Off = indefinitely.
+  bool _autoEnable = true;
   final TextEditingController _cooldownController = TextEditingController();
   final List<TextEditingController> _presetControllers = List.generate(
     AccessTimer.disablePresetsCount,
@@ -49,7 +52,11 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
     if (!mounted) return;
     setState(() {
       _state = state;
-      _disableController.text = state.disableHours.toString();
+      _autoEnable = state.disableHours > 0;
+      _disableController.text = (state.disableHours > 0
+              ? state.disableHours
+              : AccessTimer.defaultDisableHours)
+          .toString();
       _cooldownController.text = state.cooldownHours.toString();
       for (var i = 0; i < _presetControllers.length; i++) {
         _presetControllers[i].text = state.disablePresetsMinutes[i].toString();
@@ -63,11 +70,14 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
     return value;
   }
 
-  int? get _disableHours => _parse(
-    _disableController.text,
-    AccessTimer.minDisableHours,
-    AccessTimer.maxDisableHours,
-  );
+  /// 0 = indefinitely; null if the entered hours are not valid.
+  int? get _disableHours => _autoEnable
+      ? _parse(
+          _disableController.text,
+          AccessTimer.minDisableHours,
+          AccessTimer.maxDisableHours,
+        )
+      : 0;
 
   int? get _cooldownHours => _parse(
     _cooldownController.text,
@@ -190,14 +200,21 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          _numberField(
-            controller: _disableController,
-            label: loc.accessTimerDisableHours,
-            helper: loc.accessTimerDisableHelper,
-            min: AccessTimer.minDisableHours,
-            max: AccessTimer.maxDisableHours,
-            valid: disableValid,
+          SwitchListTile(
+            title: Text(loc.accessTimerAutoEnable),
+            subtitle: Text(loc.accessTimerAutoEnableHelper),
+            value: _autoEnable,
+            onChanged: (value) => setState(() => _autoEnable = value),
           ),
+          if (_autoEnable)
+            _numberField(
+              controller: _disableController,
+              label: loc.accessTimerDisableHours,
+              helper: loc.accessTimerDisableHelper,
+              min: AccessTimer.minDisableHours,
+              max: AccessTimer.maxDisableHours,
+              valid: disableValid,
+            ),
           _numberField(
             controller: _cooldownController,
             label: loc.accessTimerCooldownHours,

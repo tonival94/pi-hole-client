@@ -765,5 +765,7 @@
   "accessTimerPresetsTitle": "Duraciones del menú de desactivación (minutos)",
   "accessTimerPresetsHelper": "Opciones que aparecen al desactivar Pi-hole desde la app. \"Indefinidamente\" siempre está disponible.",
   "accessTimerPresetLabel": "Opción {number}",
-  "accessTimerUnreachable": "Pi-hole no está disponible. Comprueba tu conexión."
+  "accessTimerUnreachable": "Pi-hole no está disponible. Comprueba tu conexión.",
+  "accessTimerAutoEnable": "Reactivar automáticamente",
+  "accessTimerAutoEnableHelper": "Si está apagado, el widget desactiva Pi-hole indefinidamente: sigue desactivado hasta que lo actives."
 }

@@ -138,11 +138,9 @@ class ServerToggleWorker(
 
             val body = JSONObject()
             body.put("blocking", nextBlocking)
-            if (nextBlocking) {
-                body.put("timer", JSONObject.NULL)
-            } else {
-                body.put("timer", accessTimer.disableSeconds)
-            }
+            // X = 0: disable indefinitely (no timer), as in the original app.
+            val disableSeconds = if (nextBlocking) 0L else accessTimer.disableSeconds
+            body.put("timer", if (disableSeconds > 0L) disableSeconds else JSONObject.NULL)
             val toggleResp = client.post(piholeUrl(server.address, "/api/dns/blocking"), sid, body.toString())
 
             if (PiHoleApiClient.isAuthFailure(toggleResp.statusCode)) {
@@ -168,11 +166,13 @@ class ServerToggleWorker(
                 if (!nextBlocking) {
                     accessTimer.recordDisable()
                     // Refresh widgets when Pi-hole re-enables itself after X hours.
-                    WidgetUpdateHelper.scheduleDelayedRefresh(
-                        applicationContext,
-                        serverId,
-                        accessTimer.disableSeconds,
-                    )
+                    if (disableSeconds > 0L) {
+                        WidgetUpdateHelper.scheduleDelayedRefresh(
+                            applicationContext,
+                            serverId,
+                            disableSeconds,
+                        )
+                    }
                 }
                 // Immediately reflect the new blocking state in Stats and Compact widgets
                 // so they update in sync with the Toggle widget without waiting for PADD.

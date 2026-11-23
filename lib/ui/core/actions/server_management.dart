@@ -71,18 +71,8 @@ Future<void> disableServer(int time, BuildContext context) async {
   final serverAddress = serversViewModel.selectedServer?.address;
 
   // Internet access timer: Pi-hole can be disabled at most once every Y hours.
-  final accessTimer = await AccessTimer.get();
+  if (await showAccessTimerCooldownIfActive(context)) return;
   if (!context.mounted) return;
-  if (!accessTimer.canDisable) {
-    showErrorSnackBar(
-      context: context,
-      appConfigViewModel: appConfigViewModel,
-      label: AppLocalizations.of(context).accessTimerCooldownActive(
-        AccessTimer.formatRemaining(accessTimer.cooldownRemaining),
-      ),
-    );
-    return;
-  }
 
   final process = ProcessModal(context: context);
   process.open(AppLocalizations.of(context).disablingServer);
@@ -121,4 +111,20 @@ Future<void> disableServer(int time, BuildContext context) async {
       );
     }
   }
+}
+
+/// Internet access timer: if Pi-hole can't be disabled yet (cooldown), shows
+/// "Pi-hole can be disabled again in ..." and returns true. Local check only,
+/// so it works also when Pi-hole is unreachable.
+Future<bool> showAccessTimerCooldownIfActive(BuildContext context) async {
+  final accessTimer = await AccessTimer.get();
+  if (accessTimer.canDisable || !context.mounted) return false;
+  showErrorSnackBar(
+    context: context,
+    appConfigViewModel: Provider.of<AppConfigViewModel>(context, listen: false),
+    label: AppLocalizations.of(context).accessTimerCooldownActive(
+      AccessTimer.formatRemaining(accessTimer.cooldownRemaining),
+    ),
+  );
+  return true;
 }

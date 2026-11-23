@@ -9,6 +9,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import io.github.tsutsu3.pi_hole_client.widget.data.AccessTimerPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetPrefs
 import io.github.tsutsu3.pi_hole_client.widget.worker.ServerBlockingStatusWorker
 import io.github.tsutsu3.pi_hole_client.widget.worker.ServerPaddWorker
@@ -206,6 +207,9 @@ object WidgetUpdateHelper {
      * in-flight toggle and leave Pi-hole in an inconsistent state.
      */
     fun enqueueServerToggle(context: Context, serverId: String) {
+        // Internet access timer: answer at once (also offline) when the tap
+        // would disable Pi-hole during the cooldown.
+        if (AccessTimerPrefs.getInstance(context).blockTapDuringCooldown(context, serverId)) return
         val request = OneTimeWorkRequestBuilder<ServerToggleWorker>()
             .setInputData(workDataOf(WidgetConstants.EXTRA_SERVER_ID to serverId))
             .build()

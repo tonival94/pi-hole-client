@@ -17,6 +17,7 @@ import io.github.tsutsu3.pi_hole_client.widget.common.PiHoleApiClient
 import io.github.tsutsu3.pi_hole_client.widget.common.piholeUrl
 import io.github.tsutsu3.pi_hole_client.widget.common.WidgetState
 import io.github.tsutsu3.pi_hole_client.widget.common.WidgetStatus
+import io.github.tsutsu3.pi_hole_client.widget.data.AccessTimerPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.updateFrom
 import io.github.tsutsu3.pi_hole_client.widget.ui.compact.CompactGlanceWidget
@@ -111,6 +112,7 @@ class ServerPaddWorker(
     }
 
     private suspend fun broadcast(serverId: String, prefs: WidgetPrefs, state: WidgetState) {
+        AccessTimerPrefs.getInstance(applicationContext).rememberStatus(serverId, state.status)
         val glanceManager = GlanceAppWidgetManager(applicationContext)
         for ((widgetId, widget) in boundWidgets(serverId, prefs)) {
             val glanceId = runCatching { glanceManager.getGlanceIdBy(widgetId) }.getOrNull() ?: continue

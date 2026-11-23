@@ -2,6 +2,11 @@ package io.github.tsutsu3.pi_hole_client.widget.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
+import io.github.tsutsu3.pi_hole_client.R
+import io.github.tsutsu3.pi_hole_client.widget.common.WidgetStatus
 
 /**
  * Settings and state of the "Internet access timer".
@@ -23,6 +28,7 @@ class AccessTimerPrefs private constructor(context: Context) {
         private const val KEY_COOLDOWN_HOURS = "cooldown_hours"
         private const val KEY_LAST_DISABLE_AT_MS = "last_disable_at_ms"
         private const val KEY_DISABLE_PRESETS_MIN = "disable_presets_min"
+        private const val KEY_LAST_BLOCKING_PREFIX = "last_blocking_enabled_"
 
         const val DEFAULT_DISABLE_HOURS = 1
         const val DEFAULT_COOLDOWN_HOURS = 4
@@ -98,5 +104,50 @@ class AccessTimerPrefs private constructor(context: Context) {
 
     fun recordDisable(nowMs: Long = System.currentTimeMillis()) {
         prefs.edit().putLong(KEY_LAST_DISABLE_AT_MS, nowMs).commit()
+    }
+
+    /**
+     * Remembers the last blocking status the widgets received, so a tap can
+     * be checked against the cooldown even when Pi-hole is unreachable.
+     * Errors and auth failures keep the previous value.
+     */
+    fun rememberStatus(serverId: String, status: WidgetStatus) {
+        val enabled = when (status) {
+            WidgetStatus.BLOCKING_ON -> true
+            WidgetStatus.BLOCKING_OFF -> false
+            else -> return
+        }
+        prefs.edit().putBoolean(KEY_LAST_BLOCKING_PREFIX + serverId, enabled).apply()
+    }
+
+    /** Last known blocking status: true = enabled, false = disabled, null = unknown. */
+    fun lastKnownBlockingEnabled(serverId: String): Boolean? {
+        val key = KEY_LAST_BLOCKING_PREFIX + serverId
+        return if (prefs.contains(key)) prefs.getBoolean(key, true) else null
+    }
+
+    /**
+     * If a widget tap would disable Pi-hole while the cooldown is active,
+     * shows the "can be disabled again in ..." toast and returns true.
+     * Works offline: it only uses the last known status.
+     */
+    fun blockTapDuringCooldown(context: Context, serverId: String): Boolean {
+        val remainingMs = cooldownRemainingMs()
+        if (remainingMs <= 0L || lastKnownBlockingEnabled(serverId) != true) return false
+        showCooldownToast(context, remainingMs)
+        return true
+    }
+}
+
+/** Shows the cooldown toast ("Pi-hole can be disabled again in 3h 20m"). */
+fun showCooldownToast(context: Context, remainingMs: Long) {
+    val totalMinutes = ((remainingMs + 59_999L) / 60_000L).coerceAtLeast(1L)
+    val hours = totalMinutes / 60
+    val minutes = totalMinutes % 60
+    val remaining = if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m"
+    val appContext = context.applicationContext
+    val message = appContext.getString(R.string.access_timer_cooldown_toast, remaining)
+    Handler(Looper.getMainLooper()).post {
+        Toast.makeText(appContext, message, Toast.LENGTH_LONG).show()
     }
 }

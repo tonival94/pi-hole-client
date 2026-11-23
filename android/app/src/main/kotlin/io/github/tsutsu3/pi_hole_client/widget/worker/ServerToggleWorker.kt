@@ -3,15 +3,11 @@ package io.github.tsutsu3.pi_hole_client.widget.worker
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.Toast
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import io.github.tsutsu3.pi_hole_client.R
 import io.github.tsutsu3.pi_hole_client.widget.WidgetConstants
 import io.github.tsutsu3.pi_hole_client.widget.WidgetDebugConfig
 import io.github.tsutsu3.pi_hole_client.widget.WidgetUpdateHelper
@@ -21,6 +17,7 @@ import io.github.tsutsu3.pi_hole_client.widget.common.ToggleWidgetState
 import io.github.tsutsu3.pi_hole_client.widget.common.WidgetStatus
 import io.github.tsutsu3.pi_hole_client.widget.common.parseBlockingStatus
 import io.github.tsutsu3.pi_hole_client.widget.data.AccessTimerPrefs
+import io.github.tsutsu3.pi_hole_client.widget.data.showCooldownToast
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.updateFromToggle
 import io.github.tsutsu3.pi_hole_client.widget.data.updateStatusFrom
@@ -117,7 +114,7 @@ class ServerToggleWorker(
             if (!nextBlocking) {
                 val remainingMs = accessTimer.cooldownRemainingMs()
                 if (remainingMs > 0L) {
-                    showCooldownToast(remainingMs)
+                    showCooldownToast(applicationContext, remainingMs)
                     broadcast(
                         serverId,
                         prefs,
@@ -181,6 +178,7 @@ class ServerToggleWorker(
     }
 
     private suspend fun broadcast(serverId: String, prefs: WidgetPrefs, state: ToggleWidgetState) {
+        AccessTimerPrefs.getInstance(applicationContext).rememberStatus(serverId, state.status)
         val manager = AppWidgetManager.getInstance(applicationContext)
         val glanceManager = GlanceAppWidgetManager(applicationContext)
         val toggleIds = prefs.getWidgetIdsForServer(
@@ -218,17 +216,6 @@ class ServerToggleWorker(
             val glanceId = runCatching { glanceManager.getGlanceIdBy(widgetId) }.getOrNull() ?: continue
             updateAppWidgetState(applicationContext, glanceId) { it.updateStatusFrom(status) }
             CompactGlanceWidget().update(applicationContext, glanceId)
-        }
-    }
-
-    private fun showCooldownToast(remainingMs: Long) {
-        val totalMinutes = ((remainingMs + 59_999L) / 60_000L).coerceAtLeast(1L)
-        val hours = totalMinutes / 60
-        val minutes = totalMinutes % 60
-        val remaining = if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m"
-        val message = applicationContext.getString(R.string.access_timer_cooldown_toast, remaining)
-        Handler(Looper.getMainLooper()).post {
-            Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
         }
     }
 

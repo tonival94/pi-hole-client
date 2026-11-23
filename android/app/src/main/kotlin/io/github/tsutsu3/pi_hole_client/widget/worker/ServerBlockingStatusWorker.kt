@@ -16,6 +16,7 @@ import io.github.tsutsu3.pi_hole_client.widget.common.piholeUrl
 import io.github.tsutsu3.pi_hole_client.widget.common.ToggleWidgetState
 import io.github.tsutsu3.pi_hole_client.widget.common.WidgetStatus
 import io.github.tsutsu3.pi_hole_client.widget.common.parseBlockingStatus
+import io.github.tsutsu3.pi_hole_client.widget.data.AccessTimerPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.updateFromToggle
 import io.github.tsutsu3.pi_hole_client.widget.ui.toggle.ToggleGlanceWidget
@@ -110,6 +111,7 @@ class ServerBlockingStatusWorker(
     }
 
     private suspend fun broadcast(serverId: String, prefs: WidgetPrefs, state: ToggleWidgetState) {
+        AccessTimerPrefs.getInstance(applicationContext).rememberStatus(serverId, state.status)
         val glanceManager = GlanceAppWidgetManager(applicationContext)
         for (widgetId in boundToggleIds(serverId, prefs)) {
             val glanceId = runCatching { glanceManager.getGlanceIdBy(widgetId) }.getOrNull() ?: continue

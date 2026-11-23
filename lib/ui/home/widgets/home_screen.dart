@@ -194,30 +194,34 @@ class _HomeFab extends StatelessWidget {
               onPressed: () async {
                 final serversVM = context.read<ServersViewModel>();
                 final statusVM = context.read<StatusViewModel>();
-                if (statusVM.isServerLoading) return;
                 if (serversVM.selectedServer == null) return;
-                if (serversVM.selectedServerEnabled == true) {
-                  if (width > ResponsiveConstants.medium) {
-                    await showDialog(
-                      context: context,
-                      useRootNavigator: false,
-                      builder: (_) => DisableModal(
-                        onDisable: (time) => disableServer(time, context),
-                        window: true,
-                      ),
-                    );
-                  } else {
-                    await showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (_) => DisableModal(
-                        onDisable: (time) => disableServer(time, context),
-                        window: false,
-                      ),
-                    );
-                  }
-                } else {
+                if (serversVM.selectedServerEnabled == false) {
+                  if (statusVM.isServerLoading) return;
                   await enableServer(context);
+                  return;
+                }
+                // Enabled, or unknown (e.g. Pi-hole unreachable): check the
+                // Internet access timer first, then offer the durations.
+                if (await showAccessTimerCooldownIfActive(context)) return;
+                if (!context.mounted) return;
+                if (width > ResponsiveConstants.medium) {
+                  await showDialog(
+                    context: context,
+                    useRootNavigator: false,
+                    builder: (_) => DisableModal(
+                      onDisable: (time) => disableServer(time, context),
+                      window: true,
+                    ),
+                  );
+                } else {
+                  await showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (_) => DisableModal(
+                      onDisable: (time) => disableServer(time, context),
+                      window: false,
+                    ),
+                  );
                 }
               },
               child: const Icon(Icons.shield_rounded),

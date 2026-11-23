@@ -45,13 +45,10 @@ class AccessTimerPrefs private constructor(context: Context) {
 
         private const val HOUR_MS = 3_600_000L
 
-        @Volatile
-        private var instance: AccessTimerPrefs? = null
-
+        // No cached instance: Android already caches SharedPreferences per
+        // name, and a fresh object keeps unit tests independent.
         fun getInstance(context: Context): AccessTimerPrefs =
-            instance ?: synchronized(this) {
-                instance ?: AccessTimerPrefs(context.applicationContext).also { instance = it }
-            }
+            AccessTimerPrefs(context.applicationContext)
     }
 
     private val prefs: SharedPreferences =

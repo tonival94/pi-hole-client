@@ -117,6 +117,10 @@ jobs:
           mv build/app/outputs/flutter-apk/app-release.apk \
             "pihole-timer-${{ steps.version.outputs.name }}.apk"
 
+      - name: Widget unit tests
+        working-directory: android
+        run: ./gradlew :app:testDebugUnitTest --tests "io.github.tsutsu3.pi_hole_client.widget.*"
+
       - name: Remove signing files
         if: always()
         run: rm -f android/key.properties "$KEYSTORE"

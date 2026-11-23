@@ -763,5 +763,6 @@
   "accessTimerNotSupported": "Der Internetzugangs-Timer ist nur unter Android verfügbar",
   "accessTimerPresetsTitle": "Dauern im Deaktivierungsmenü (Minuten)",
   "accessTimerPresetsHelper": "Auswahl beim Deaktivieren von Pi-hole in der App. „Unbegrenzt“ ist immer verfügbar.",
-  "accessTimerPresetLabel": "Option {number}"
+  "accessTimerPresetLabel": "Option {number}",
+  "accessTimerUnreachable": "Pi-hole ist nicht erreichbar. Prüfe deine Verbindung."
 }

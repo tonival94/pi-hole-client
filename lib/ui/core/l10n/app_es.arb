@@ -764,5 +764,6 @@
   "accessTimerNotSupported": "El temporizador de acceso a Internet solo está disponible en Android",
   "accessTimerPresetsTitle": "Duraciones del menú de desactivación (minutos)",
   "accessTimerPresetsHelper": "Opciones que aparecen al desactivar Pi-hole desde la app. \"Indefinidamente\" siempre está disponible.",
-  "accessTimerPresetLabel": "Opción {number}"
+  "accessTimerPresetLabel": "Opción {number}",
+  "accessTimerUnreachable": "Pi-hole no está disponible. Comprueba tu conexión."
 }

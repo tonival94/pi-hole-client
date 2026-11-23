@@ -4664,6 +4664,12 @@ abstract class AppLocalizations {
   /// **'Pi-hole can be disabled again in {remaining}'**
   String accessTimerCooldownActive(Object remaining);
 
+  /// No description provided for @accessTimerUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Pi-hole is unreachable. Check your connection.'**
+  String get accessTimerUnreachable;
+
   /// No description provided for @accessTimerPresetsTitle.
   ///
   /// In en, this message translates to:

@@ -2453,6 +2453,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get accessTimerUnreachable => 'Pi-hole no está disponible. Comprueba tu conexión.';
+
+  @override
   String get accessTimerPresetsTitle => 'Duraciones del menú de desactivación (minutos)';
 
   @override

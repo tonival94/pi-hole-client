@@ -765,5 +765,6 @@
   "accessTimerNotSupported": "インターネットアクセスタイマーはAndroidでのみ利用できます",
   "accessTimerPresetsTitle": "無効化メニューの時間（分）",
   "accessTimerPresetsHelper": "アプリからPi-holeを無効化するときに表示される選択肢です。「無期限」は常に選べます。",
-  "accessTimerPresetLabel": "選択肢 {number}"
+  "accessTimerPresetLabel": "選択肢 {number}",
+  "accessTimerUnreachable": "Pi-holeに接続できません。接続を確認してください。"
 }

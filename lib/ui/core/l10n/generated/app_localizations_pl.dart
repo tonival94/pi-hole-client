@@ -2436,6 +2436,9 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get accessTimerUnreachable => 'Pi-hole jest niedostępny. Sprawdź połączenie.';
+
+  @override
   String get accessTimerPresetsTitle => 'Czasy w menu wyłączania (minuty)';
 
   @override

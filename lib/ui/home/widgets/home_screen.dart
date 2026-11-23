@@ -195,12 +195,22 @@ class _HomeFab extends StatelessWidget {
                 final serversVM = context.read<ServersViewModel>();
                 final statusVM = context.read<StatusViewModel>();
                 if (serversVM.selectedServer == null) return;
-                if (serversVM.selectedServerEnabled == false) {
-                  if (statusVM.isServerLoading) return;
+                final enabled = serversVM.selectedServerEnabled;
+                // Pi-hole unreachable (e.g. no network): no menu, just say why
+                // it can't be disabled now.
+                if (statusVM.getServerStatus != LoadStatus.loaded) {
+                  if (enabled != false &&
+                      await showAccessTimerCooldownIfActive(context)) {
+                    return;
+                  }
+                  if (!context.mounted) return;
+                  showPiholeUnreachable(context);
+                  return;
+                }
+                if (enabled == false) {
                   await enableServer(context);
                   return;
                 }
-                // Enabled, or unknown (e.g. Pi-hole unreachable): check the
                 // Internet access timer first, then offer the durations.
                 if (await showAccessTimerCooldownIfActive(context)) return;
                 if (!context.mounted) return;

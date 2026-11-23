@@ -2351,6 +2351,9 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get accessTimerUnreachable => 'Pi-holeに接続できません。接続を確認してください。';
+
+  @override
   String get accessTimerPresetsTitle => '無効化メニューの時間（分）';
 
   @override

@@ -18,6 +18,7 @@ import io.github.tsutsu3.pi_hole_client.widget.common.WidgetStatus
 import io.github.tsutsu3.pi_hole_client.widget.common.parseBlockingStatus
 import io.github.tsutsu3.pi_hole_client.widget.data.AccessTimerPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.showCooldownToast
+import io.github.tsutsu3.pi_hole_client.widget.data.showUnreachableToast
 import io.github.tsutsu3.pi_hole_client.widget.data.WidgetPrefs
 import io.github.tsutsu3.pi_hole_client.widget.data.updateFromToggle
 import io.github.tsutsu3.pi_hole_client.widget.data.updateStatusFrom
@@ -100,6 +101,18 @@ class ServerToggleWorker(
         }
         if (statusResp.statusCode !in 200..299) {
             if (WidgetDebugConfig.DEBUG) Log.w(TAG, "Get status failed: status=${statusResp.statusCode}")
+            if (statusResp.statusCode < 0) {
+                // Pi-hole unreachable (no network, timeout, TLS...): tell the user.
+                // During the cooldown a disable would be refused anyway, so say that
+                // unless Pi-hole was known to be disabled (the tap meant "enable").
+                val timer = AccessTimerPrefs.getInstance(applicationContext)
+                val remainingMs = timer.cooldownRemainingMs()
+                if (remainingMs > 0L && timer.lastKnownBlockingEnabled(serverId) != false) {
+                    showCooldownToast(applicationContext, remainingMs)
+                } else {
+                    showUnreachableToast(applicationContext)
+                }
+            }
             broadcast(serverId, prefs, errorState(serverId, server.alias))
             return Result.success()
         }

@@ -151,3 +151,12 @@ fun showCooldownToast(context: Context, remainingMs: Long) {
         Toast.makeText(appContext, message, Toast.LENGTH_LONG).show()
     }
 }
+
+/** Shows "Pi-hole is unreachable. Check your connection." */
+fun showUnreachableToast(context: Context) {
+    val appContext = context.applicationContext
+    val message = appContext.getString(R.string.access_timer_unreachable_toast)
+    Handler(Looper.getMainLooper()).post {
+        Toast.makeText(appContext, message, Toast.LENGTH_LONG).show()
+    }
+}

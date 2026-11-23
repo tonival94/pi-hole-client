@@ -128,3 +128,12 @@ Future<bool> showAccessTimerCooldownIfActive(BuildContext context) async {
   );
   return true;
 }
+
+/// Shows "Pi-hole is unreachable. Check your connection."
+void showPiholeUnreachable(BuildContext context) {
+  showErrorSnackBar(
+    context: context,
+    appConfigViewModel: Provider.of<AppConfigViewModel>(context, listen: false),
+    label: AppLocalizations.of(context).accessTimerUnreachable,
+  );
+}

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="access_timer_cooldown_toast">Pi-hole kann in %1$s wieder deaktiviert werden</string>
+    <string name="access_timer_unreachable_toast">Pi-hole ist nicht erreichbar. Prüfe deine Verbindung.</string>
 </resources>

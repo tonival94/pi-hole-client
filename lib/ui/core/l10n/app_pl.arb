@@ -763,5 +763,6 @@
   "accessTimerNotSupported": "Licznik dostępu do Internetu jest dostępny tylko na Androidzie",
   "accessTimerPresetsTitle": "Czasy w menu wyłączania (minuty)",
   "accessTimerPresetsHelper": "Opcje wyświetlane przy wyłączaniu Pi-hole w aplikacji. „Bezterminowo” jest zawsze dostępne.",
-  "accessTimerPresetLabel": "Opcja {number}"
+  "accessTimerPresetLabel": "Opcja {number}",
+  "accessTimerUnreachable": "Pi-hole jest niedostępny. Sprawdź połączenie."
 }

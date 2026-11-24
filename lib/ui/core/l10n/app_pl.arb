@@ -749,7 +749,7 @@
   "minutes10": "10 minut",
   "minutes20": "20 minut",
   "minutes40": "40 minut",
-  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimer": "Liczniki wyłączania",
   "internetAccessTimerDescription": "Licznik widżetu, limit wyłączeń i czasy w menu wyłączania",
   "accessTimerDisableHours": "Czas wyłączenia z widżetu (godziny)",
   "accessTimerDisableHelper": "Dotknięcie przycisku widżetu wyłącza Pi-hole na tyle godzin, po czym zostaje on automatycznie włączony.",

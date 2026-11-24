@@ -71,7 +71,7 @@ class _BaseState extends State<Base>
         if (!mounted) return;
       }
 
-      // Needed for the widget's cooldown message (Pi-hole timers by Toni).
+      // Needed for the widget's cooldown message (Advanced settings > Disable timers).
       await AccessTimer.requestNotificationPermission();
       if (!mounted) return;
 

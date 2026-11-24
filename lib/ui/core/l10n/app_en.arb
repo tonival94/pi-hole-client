@@ -749,7 +749,7 @@
   "minutes10": "10 minutes",
   "minutes20": "20 minutes",
   "minutes40": "40 minutes",
-  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimer": "Disable timers",
   "internetAccessTimerDescription": "Widget timer, disable limit and disable menu durations",
   "accessTimerDisableHours": "Widget disable duration (hours)",
   "accessTimerDisableHelper": "Tapping the widget button disables Pi-hole for this many hours, then it is re-enabled automatically.",

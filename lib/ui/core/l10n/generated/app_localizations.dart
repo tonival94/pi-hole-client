@@ -4601,7 +4601,7 @@ abstract class AppLocalizations {
   /// No description provided for @internetAccessTimer.
   ///
   /// In en, this message translates to:
-  /// **'Pi-hole timers by Toni'**
+  /// **'Disable timers'**
   String get internetAccessTimer;
 
   /// No description provided for @internetAccessTimerDescription.

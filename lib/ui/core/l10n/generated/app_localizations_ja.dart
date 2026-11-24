@@ -2314,7 +2314,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get minutes40 => '40分';
 
   @override
-  String get internetAccessTimer => 'Pi-hole timers by Toni';
+  String get internetAccessTimer => '無効化タイマー';
 
   @override
   String get internetAccessTimerDescription => 'ウィジェットのタイマー、無効化の制限、無効化メニューの時間';

@@ -2399,7 +2399,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get minutes40 => '40 minut';
 
   @override
-  String get internetAccessTimer => 'Pi-hole timers by Toni';
+  String get internetAccessTimer => 'Liczniki wyłączania';
 
   @override
   String get internetAccessTimerDescription => 'Licznik widżetu, limit wyłączeń i czasy w menu wyłączania';

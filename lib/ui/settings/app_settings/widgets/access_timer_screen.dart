@@ -8,7 +8,7 @@ import 'package:pi_hole_client/ui/core/view_models/app_config_viewmodel.dart';
 import 'package:pi_hole_client/utils/access_timer.dart';
 import 'package:provider/provider.dart';
 
-/// Settings > App > "Pi-hole timers by Toni".
+/// Settings > App > Advanced settings > "Disable timers".
 ///
 /// X = how long a disable from the widget lasts (hours).
 /// Y = Pi-hole can be disabled at most once every Y hours (0 = no limit).

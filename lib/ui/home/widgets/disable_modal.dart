@@ -28,7 +28,7 @@ class _DisableOption {
 class _DisableModalState extends State<DisableModal> {
   int? selectedOption;
 
-  /// Timed options come from Settings > "Pi-hole timers by Toni";
+  /// Timed options come from Advanced settings > "Disable timers";
   /// "indefinitely" is always the last one.
   List<_DisableOption> _options = _buildOptions(
     AccessTimer.defaultDisablePresetsMinutes,

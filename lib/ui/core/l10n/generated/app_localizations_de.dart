@@ -2420,7 +2420,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get minutes40 => '40 Minuten';
 
   @override
-  String get internetAccessTimer => 'Pi-hole timers by Toni';
+  String get internetAccessTimer => 'Deaktivierungs-Timer';
 
   @override
   String get internetAccessTimerDescription => 'Widget-Timer, Deaktivierungslimit und Dauern im Deaktivierungsmenü';

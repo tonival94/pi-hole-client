@@ -749,7 +749,7 @@
   "minutes10": "10 Minuten",
   "minutes20": "20 Minuten",
   "minutes40": "40 Minuten",
-  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimer": "Deaktivierungs-Timer",
   "internetAccessTimerDescription": "Widget-Timer, Deaktivierungslimit und Dauern im Deaktivierungsmenü",
   "accessTimerDisableHours": "Deaktivierungsdauer über das Widget (Stunden)",
   "accessTimerDisableHelper": "Ein Tippen auf die Widget-Schaltfläche deaktiviert Pi-hole für diese Anzahl Stunden, danach wird es automatisch wieder aktiviert.",

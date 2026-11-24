@@ -750,7 +750,7 @@
   "minutes10": "10 minutos",
   "minutes20": "20 minutos",
   "minutes40": "40 minutos",
-  "internetAccessTimer": "Pi-hole timers by Toni",
+  "internetAccessTimer": "Temporizadores de desactivación",
   "internetAccessTimerDescription": "Temporizador del widget, límite de desactivación y duraciones del menú de desactivación",
   "accessTimerDisableHours": "Duración de la desactivación desde el widget (horas)",
   "accessTimerDisableHelper": "Al tocar el botón del widget, Pi-hole se desactiva durante estas horas y luego se reactiva automáticamente.",

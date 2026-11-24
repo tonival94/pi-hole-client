@@ -4670,6 +4670,12 @@ abstract class AppLocalizations {
   /// **'Pi-hole is unreachable. Check your connection.'**
   String get accessTimerUnreachable;
 
+  /// No description provided for @blocking.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocking'**
+  String get blocking;
+
   /// No description provided for @accessTimerAutoEnable.
   ///
   /// In en, this message translates to:

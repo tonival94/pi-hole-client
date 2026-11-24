@@ -281,6 +281,9 @@ void main() async {
       await tester.scrollUntilVisible(find.text('Reset application'), 100);
 
       expect(find.text('Reset application'), findsOneWidget);
+      // The new Blocking section pushes this item further down.
+      await tester.ensureVisible(find.text('Reset application'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Reset application'));
       await tester.pumpAndSettle();
       expect(find.byType(ResetScreen), findsOneWidget);

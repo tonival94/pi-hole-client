@@ -2478,4 +2478,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get accessTimerNotSupported => 'Der Internetzugangs-Timer ist nur unter Android verfügbar';
+
+  @override
+  String get blocking => 'Blockierung';
 }

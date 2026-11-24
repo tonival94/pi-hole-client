@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pi_hole_client/ui/core/l10n/generated/app_localizations.dart';
+import 'package:pi_hole_client/ui/core/ui/components/section_label.dart';
 import 'package:pi_hole_client/ui/core/ui/helpers/snackbar.dart';
 import 'package:pi_hole_client/ui/core/view_models/app_config_viewmodel.dart';
 import 'package:pi_hole_client/utils/access_timer.dart';
@@ -254,13 +255,7 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
             max: AccessTimer.maxCooldownHours,
             valid: cooldownValid,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-            child: Text(
-              loc.accessTimerPresetsTitle,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ),
+          SectionLabel(label: loc.accessTimerPresetsTitle),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
             child: Text(

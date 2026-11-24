@@ -767,5 +767,6 @@
   "accessTimerUnreachable": "Pi-hole ist nicht erreichbar. Prüfe deine Verbindung.",
   "accessTimerAutoEnable": "Automatisch wieder aktivieren",
   "accessTimerAutoEnableHelper": "Wenn aus, deaktiviert das Widget Pi-hole unbegrenzt: Es bleibt deaktiviert, bis du es aktivierst.",
-  "accessTimerPresetDuplicate": "Diese Zeit ist schon in der Liste"
+  "accessTimerPresetDuplicate": "Diese Zeit ist schon in der Liste",
+  "blocking": "Blockierung"
 }

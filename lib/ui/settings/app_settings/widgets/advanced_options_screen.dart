@@ -252,6 +252,15 @@ class AdvancedOptionsScreen extends StatelessWidget {
                 Routes.settingsAppAdvancedChartVisualization,
               ),
             ),
+            SectionLabel(label: AppLocalizations.of(context).blocking),
+            ListTile(
+              leading: const Icon(Icons.timer_rounded),
+              title: Text(AppLocalizations.of(context).internetAccessTimer),
+              subtitle: Text(
+                AppLocalizations.of(context).internetAccessTimerDescription,
+              ),
+              onTap: () => context.pushNamed(Routes.settingsAppAccessTimer),
+            ),
             SectionLabel(label: AppLocalizations.of(context).performance),
             ListTile(
               leading: const Icon(Icons.update),

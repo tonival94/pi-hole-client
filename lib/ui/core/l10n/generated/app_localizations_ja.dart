@@ -2375,4 +2375,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get accessTimerPresetDuplicate => 'この時間はすでにリストにあります';
+
+  @override
+  String get blocking => 'ブロック';
 }

@@ -2481,4 +2481,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get accessTimerPresetDuplicate => 'Diese Zeit ist schon in der Liste';
+
+  @override
+  String get blocking => 'Blockierung';
 }

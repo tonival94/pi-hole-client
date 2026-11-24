@@ -4676,6 +4676,12 @@ abstract class AppLocalizations {
   /// **'This time is already in the list'**
   String get accessTimerPresetDuplicate;
 
+  /// No description provided for @blocking.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocking'**
+  String get blocking;
+
   /// No description provided for @accessTimerAutoEnable.
   ///
   /// In en, this message translates to:

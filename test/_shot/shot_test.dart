@@ -38,14 +38,14 @@ void main() async {
     );
     await tester.pumpAndSettle();
     await expectLater(find.byType(MaterialApp), matchesGoldenFile('s1.png'));
-    for (final l in ['de', 'es']) {
+    for (final l in ['de', 'es', 'pl', 'ja']) {
       await tester.pumpWidget(
         buildTestApp(
           Builder(
             builder: (context) => Localizations.override(
               context: context,
               locale: Locale(l),
-              child: const DisableTimersScreen(),
+              child: DisableTimersScreen(key: ValueKey(l)),
             ),
           ),
           appConfigViewModel: vm,

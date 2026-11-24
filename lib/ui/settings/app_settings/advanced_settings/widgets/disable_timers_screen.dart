@@ -312,6 +312,24 @@ class _DisableTimersScreenState extends State<DisableTimersScreen> {
     ];
   }
 
+  /// Just wide enough for the longest unit name plus the arrow, so the
+  /// text field gets the rest of the row in every language.
+  double _unitMenuWidth(AppLocalizations loc) {
+    final style = Theme.of(context).textTheme.bodyLarge;
+    var widest = 0.0;
+    for (final unit in _TimeUnit.values) {
+      final painter = TextPainter(
+        text: TextSpan(text: _unitLabel(unit, loc), style: style),
+        textDirection: TextDirection.ltr,
+        textScaler: MediaQuery.textScalerOf(context),
+      )..layout();
+      if (painter.width > widest) widest = painter.width;
+      painter.dispose();
+    }
+    // Room for the content padding and the arrow.
+    return widest.ceilToDouble() + 64;
+  }
+
   /// Time unit picker next to the text field, same height, no border.
   Widget _unitMenu({
     required String id,
@@ -323,7 +341,7 @@ class _DisableTimersScreenState extends State<DisableTimersScreen> {
       // A new key when the unit changes from code (e.g. after saving), so
       // the menu shows it: initialSelection is read only once.
       key: ValueKey('$id-${unit.name}'),
-      width: 112,
+      width: _unitMenuWidth(loc),
       initialSelection: unit,
       requestFocusOnTap: false,
       enableSearch: false,

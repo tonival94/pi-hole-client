@@ -323,7 +323,7 @@ class _DisableTimersScreenState extends State<DisableTimersScreen> {
       // A new key when the unit changes from code (e.g. after saving), so
       // the menu shows it: initialSelection is read only once.
       key: ValueKey('$id-${unit.name}'),
-      width: 132,
+      width: 112,
       initialSelection: unit,
       requestFocusOnTap: false,
       enableSearch: false,

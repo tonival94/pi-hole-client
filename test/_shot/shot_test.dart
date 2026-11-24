@@ -38,6 +38,26 @@ void main() async {
     );
     await tester.pumpAndSettle();
     await expectLater(find.byType(MaterialApp), matchesGoldenFile('s1.png'));
+    for (final l in ['de', 'es']) {
+      await tester.pumpWidget(
+        buildTestApp(
+          Builder(
+            builder: (context) => Localizations.override(
+              context: context,
+              locale: Locale(l),
+              child: const DisableTimersScreen(),
+            ),
+          ),
+          appConfigViewModel: vm,
+        ),
+      );
+      await tester.pumpAndSettle();
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('$l.png'));
+    }
+    await tester.pumpWidget(
+      buildTestApp(const DisableTimersScreen(), appConfigViewModel: vm),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('disableDurationUnit0-seconds')));
     await tester.pumpAndSettle();
     await expectLater(find.byType(MaterialApp), matchesGoldenFile('s2.png'));

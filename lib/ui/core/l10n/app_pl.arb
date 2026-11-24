@@ -766,5 +766,6 @@
   "accessTimerPresetLabel": "Opcja {number}",
   "accessTimerUnreachable": "Pi-hole jest niedostępny. Sprawdź połączenie.",
   "accessTimerAutoEnable": "Włącz ponownie automatycznie",
-  "accessTimerAutoEnableHelper": "Gdy opcja jest wyłączona, widżet wyłącza Pi-hole bezterminowo: pozostaje wyłączony, dopóki go nie włączysz."
+  "accessTimerAutoEnableHelper": "Gdy opcja jest wyłączona, widżet wyłącza Pi-hole bezterminowo: pozostaje wyłączony, dopóki go nie włączysz.",
+  "blocking": "Blokowanie"
 }

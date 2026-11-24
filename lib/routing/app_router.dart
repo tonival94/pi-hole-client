@@ -225,7 +225,7 @@ GoRouter createAppRouter({
                         builder: (context, state) => const ServersScreen(),
                       ),
                       GoRoute(
-                        path: '/settings/app/access-timer',
+                        path: '/settings/app/advanced/access-timer',
                         name: Routes.settingsAppAccessTimer,
                         builder: (context, state) => const AccessTimerScreen(),
                       ),

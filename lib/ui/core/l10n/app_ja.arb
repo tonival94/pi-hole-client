@@ -768,5 +768,6 @@
   "accessTimerPresetLabel": "選択肢 {number}",
   "accessTimerUnreachable": "Pi-holeに接続できません。接続を確認してください。",
   "accessTimerAutoEnable": "自動的に再有効化",
-  "accessTimerAutoEnableHelper": "オフの場合、ウィジェットはPi-holeを無期限に無効化します。有効にするまで無効のままです。"
+  "accessTimerAutoEnableHelper": "オフの場合、ウィジェットはPi-holeを無期限に無効化します。有効にするまで無効のままです。",
+  "blocking": "ブロック"
 }

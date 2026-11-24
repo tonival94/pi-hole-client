@@ -92,10 +92,21 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
     AccessTimer.maxPresetMinutes,
   );
 
-  bool get _presetsValid => List.generate(
-    _presetControllers.length,
-    _presetMinutes,
-  ).every((v) => v != null);
+  /// Whether option [index] repeats the time of an earlier option.
+  bool _presetIsDuplicate(int index) {
+    final minutes = _presetMinutes(index);
+    if (minutes == null) return false;
+    for (var j = 0; j < index; j++) {
+      if (_presetMinutes(j) == minutes) return true;
+    }
+    return false;
+  }
+
+  bool get _presetsValid {
+    final values = List.generate(_presetControllers.length, _presetMinutes);
+    return values.every((v) => v != null) &&
+        values.toSet().length == values.length;
+  }
 
   Future<void> _save() async {
     final disableHours = _disableHours;
@@ -158,6 +169,7 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
     required int max,
     required bool valid,
     String? helper,
+    String? errorText,
   }) {
     final loc = AppLocalizations.of(context);
     return Padding(
@@ -171,7 +183,9 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
           labelText: label,
           helperText: helper,
           helperMaxLines: 4,
-          errorText: valid ? null : loc.accessTimerInvalidRange(min, max),
+          errorText: valid
+              ? errorText
+              : loc.accessTimerInvalidRange(min, max),
           errorMaxLines: 2,
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -261,6 +275,9 @@ class _AccessTimerScreenState extends State<AccessTimerScreen> {
               min: AccessTimer.minPresetMinutes,
               max: AccessTimer.maxPresetMinutes,
               valid: _presetMinutes(i) != null,
+              errorText: _presetIsDuplicate(i)
+                  ? loc.accessTimerPresetDuplicate
+                  : null,
             ),
           Padding(
             padding: const EdgeInsets.all(16),

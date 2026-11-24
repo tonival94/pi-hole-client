@@ -4670,6 +4670,12 @@ abstract class AppLocalizations {
   /// **'Pi-hole is unreachable. Check your connection.'**
   String get accessTimerUnreachable;
 
+  /// No description provided for @accessTimerPresetDuplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'This time is already in the list'**
+  String get accessTimerPresetDuplicate;
+
   /// No description provided for @accessTimerAutoEnable.
   ///
   /// In en, this message translates to:

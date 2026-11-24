@@ -2372,4 +2372,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get accessTimerNotSupported => 'インターネットアクセスタイマーはAndroidでのみ利用できます';
+
+  @override
+  String get accessTimerPresetDuplicate => 'この時間はすでにリストにあります';
 }

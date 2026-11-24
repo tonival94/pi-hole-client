@@ -768,5 +768,6 @@
   "accessTimerUnreachable": "Pi-hole no está disponible. Comprueba tu conexión.",
   "accessTimerAutoEnable": "Reactivar automáticamente",
   "accessTimerAutoEnableHelper": "Si está apagado, el widget desactiva Pi-hole indefinidamente: sigue desactivado hasta que lo actives.",
+  "accessTimerPresetDuplicate": "Este tiempo ya está en la lista",
   "blocking": "Bloqueo"
 }

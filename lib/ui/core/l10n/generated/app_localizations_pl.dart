@@ -2459,5 +2459,8 @@ class AppLocalizationsPl extends AppLocalizations {
   String get accessTimerNotSupported => 'Licznik dostępu do Internetu jest dostępny tylko na Androidzie';
 
   @override
+  String get accessTimerPresetDuplicate => 'Ten czas jest już na liście';
+
+  @override
   String get blocking => 'Blokowanie';
 }

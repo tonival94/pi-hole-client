@@ -2437,5 +2437,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accessTimerNotSupported => 'The Internet access timer is available only on Android';
 
   @override
+  String get accessTimerPresetDuplicate => 'This time is already in the list';
+
+  @override
   String get blocking => 'Blocking';
 }

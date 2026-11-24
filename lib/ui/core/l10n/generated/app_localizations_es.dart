@@ -2476,5 +2476,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accessTimerNotSupported => 'El temporizador de acceso a Internet solo está disponible en Android';
 
   @override
+  String get accessTimerPresetDuplicate => 'Este tiempo ya está en la lista';
+
+  @override
   String get blocking => 'Bloqueo';
 }

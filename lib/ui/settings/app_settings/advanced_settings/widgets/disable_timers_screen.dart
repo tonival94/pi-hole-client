@@ -312,7 +312,7 @@ class _DisableTimersScreenState extends State<DisableTimersScreen> {
     ];
   }
 
-  /// Time unit picker, as tall as the text field next to it.
+  /// Time unit picker next to the text field, same height, no border.
   Widget _unitMenu({
     required String id,
     required _TimeUnit unit,
@@ -327,10 +327,9 @@ class _DisableTimersScreenState extends State<DisableTimersScreen> {
       initialSelection: unit,
       requestFocusOnTap: false,
       enableSearch: false,
+      // No border: only the text field is boxed, as in the other screens.
       inputDecorationTheme: const InputDecorationTheme(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
+        border: InputBorder.none,
       ),
       onSelected: (value) {
         if (value != null) onSelected(value);

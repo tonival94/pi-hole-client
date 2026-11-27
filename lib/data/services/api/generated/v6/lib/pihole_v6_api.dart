@@ -8,7 +8,6 @@ export 'package:pihole_v6_api/src/auth/basic_auth.dart';
 export 'package:pihole_v6_api/src/auth/bearer_auth.dart';
 export 'package:pihole_v6_api/src/auth/oauth.dart';
 
-
 export 'package:pihole_v6_api/src/api/actions_api.dart';
 export 'package:pihole_v6_api/src/api/authentication_api.dart';
 export 'package:pihole_v6_api/src/api/client_management_api.dart';
@@ -348,4 +347,3 @@ export 'package:pihole_v6_api/src/model/version_version_ftl_remote.dart';
 export 'package:pihole_v6_api/src/model/version_version_web.dart';
 export 'package:pihole_v6_api/src/model/version_version_web_local.dart';
 export 'package:pihole_v6_api/src/model/version_version_web_remote.dart';
-

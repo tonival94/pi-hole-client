@@ -92,29 +92,23 @@ extension $SensorsSensorsCopyWith on SensorsSensors {
 // **************************************************************************
 
 SensorsSensors _$SensorsSensorsFromJson(Map<String, dynamic> json) =>
-    $checkedCreate(
-      'SensorsSensors',
-      json,
-      ($checkedConvert) {
-        final val = SensorsSensors(
-          list: $checkedConvert(
-            'list',
-            (v) => (v as List<dynamic>?)
-                ?.map(
-                  (e) => SensorsSensorsListInner.fromJson(
-                    e as Map<String, dynamic>,
-                  ),
-                )
-                .toList(),
-          ),
-          cpuTemp: $checkedConvert('cpu_temp', (v) => v as num?),
-          hotLimit: $checkedConvert('hot_limit', (v) => v as num?),
-          unit: $checkedConvert('unit', (v) => v as String?),
-        );
-        return val;
-      },
-      fieldKeyMap: const {'cpuTemp': 'cpu_temp', 'hotLimit': 'hot_limit'},
-    );
+    $checkedCreate('SensorsSensors', json, ($checkedConvert) {
+      final val = SensorsSensors(
+        list: $checkedConvert(
+          'list',
+          (v) => (v as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    SensorsSensorsListInner.fromJson(e as Map<String, dynamic>),
+              )
+              .toList(),
+        ),
+        cpuTemp: $checkedConvert('cpu_temp', (v) => v as num?),
+        hotLimit: $checkedConvert('hot_limit', (v) => v as num?),
+        unit: $checkedConvert('unit', (v) => v as String?),
+      );
+      return val;
+    }, fieldKeyMap: const {'cpuTemp': 'cpu_temp', 'hotLimit': 'hot_limit'});
 
 Map<String, dynamic> _$SensorsSensorsToJson(SensorsSensors instance) =>
     <String, dynamic>{

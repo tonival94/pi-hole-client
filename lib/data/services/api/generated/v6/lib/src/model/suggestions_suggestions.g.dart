@@ -142,48 +142,43 @@ extension $SuggestionsSuggestionsCopyWith on SuggestionsSuggestions {
 
 SuggestionsSuggestions _$SuggestionsSuggestionsFromJson(
   Map<String, dynamic> json,
-) => $checkedCreate(
-  'SuggestionsSuggestions',
-  json,
-  ($checkedConvert) {
-    final val = SuggestionsSuggestions(
-      domain: $checkedConvert(
-        'domain',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      clientIp: $checkedConvert(
-        'client_ip',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      clientName: $checkedConvert(
-        'client_name',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      upstream: $checkedConvert(
-        'upstream',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      type: $checkedConvert(
-        'type',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      status: $checkedConvert(
-        'status',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      reply: $checkedConvert(
-        'reply',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      dnssec: $checkedConvert(
-        'dnssec',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-    );
-    return val;
-  },
-  fieldKeyMap: const {'clientIp': 'client_ip', 'clientName': 'client_name'},
-);
+) => $checkedCreate('SuggestionsSuggestions', json, ($checkedConvert) {
+  final val = SuggestionsSuggestions(
+    domain: $checkedConvert(
+      'domain',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    clientIp: $checkedConvert(
+      'client_ip',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    clientName: $checkedConvert(
+      'client_name',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    upstream: $checkedConvert(
+      'upstream',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    type: $checkedConvert(
+      'type',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    status: $checkedConvert(
+      'status',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    reply: $checkedConvert(
+      'reply',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    dnssec: $checkedConvert(
+      'dnssec',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+  );
+  return val;
+}, fieldKeyMap: const {'clientIp': 'client_ip', 'clientName': 'client_name'});
 
 Map<String, dynamic> _$SuggestionsSuggestionsToJson(
   SuggestionsSuggestions instance,

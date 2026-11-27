@@ -189,61 +189,54 @@ extension $ConfigConfigWebserverCopyWith on ConfigConfigWebserver {
 
 ConfigConfigWebserver _$ConfigConfigWebserverFromJson(
   Map<String, dynamic> json,
-) => $checkedCreate(
-  'ConfigConfigWebserver',
-  json,
-  ($checkedConvert) {
-    final val = ConfigConfigWebserver(
-      domain: $checkedConvert('domain', (v) => v as String?),
-      acl: $checkedConvert('acl', (v) => v as String?),
-      port: $checkedConvert('port', (v) => v as String?),
-      threads: $checkedConvert('threads', (v) => (v as num?)?.toInt()),
-      headers: $checkedConvert(
-        'headers',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      serveAll: $checkedConvert('serve_all', (v) => v as bool?),
-      advancedOpts: $checkedConvert(
-        'advancedOpts',
-        (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
-      ),
-      session: $checkedConvert(
-        'session',
-        (v) => v == null
-            ? null
-            : ConfigConfigWebserverSession.fromJson(v as Map<String, dynamic>),
-      ),
-      tls: $checkedConvert(
-        'tls',
-        (v) => v == null
-            ? null
-            : ConfigConfigWebserverTls.fromJson(v as Map<String, dynamic>),
-      ),
-      paths: $checkedConvert(
-        'paths',
-        (v) => v == null
-            ? null
-            : ConfigConfigWebserverPaths.fromJson(v as Map<String, dynamic>),
-      ),
-      interface_: $checkedConvert(
-        'interface',
-        (v) => v == null
-            ? null
-            : ConfigConfigWebserverInterface.fromJson(
-                v as Map<String, dynamic>,
-              ),
-      ),
-      api: $checkedConvert(
-        'api',
-        (v) => v == null
-            ? null
-            : ConfigConfigWebserverApi.fromJson(v as Map<String, dynamic>),
-      ),
-    );
-    return val;
-  },
-  fieldKeyMap: const {'serveAll': 'serve_all', 'interface_': 'interface'},
-);
+) => $checkedCreate('ConfigConfigWebserver', json, ($checkedConvert) {
+  final val = ConfigConfigWebserver(
+    domain: $checkedConvert('domain', (v) => v as String?),
+    acl: $checkedConvert('acl', (v) => v as String?),
+    port: $checkedConvert('port', (v) => v as String?),
+    threads: $checkedConvert('threads', (v) => (v as num?)?.toInt()),
+    headers: $checkedConvert(
+      'headers',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    serveAll: $checkedConvert('serve_all', (v) => v as bool?),
+    advancedOpts: $checkedConvert(
+      'advancedOpts',
+      (v) => (v as List<dynamic>?)?.map((e) => e as String).toList(),
+    ),
+    session: $checkedConvert(
+      'session',
+      (v) => v == null
+          ? null
+          : ConfigConfigWebserverSession.fromJson(v as Map<String, dynamic>),
+    ),
+    tls: $checkedConvert(
+      'tls',
+      (v) => v == null
+          ? null
+          : ConfigConfigWebserverTls.fromJson(v as Map<String, dynamic>),
+    ),
+    paths: $checkedConvert(
+      'paths',
+      (v) => v == null
+          ? null
+          : ConfigConfigWebserverPaths.fromJson(v as Map<String, dynamic>),
+    ),
+    interface_: $checkedConvert(
+      'interface',
+      (v) => v == null
+          ? null
+          : ConfigConfigWebserverInterface.fromJson(v as Map<String, dynamic>),
+    ),
+    api: $checkedConvert(
+      'api',
+      (v) => v == null
+          ? null
+          : ConfigConfigWebserverApi.fromJson(v as Map<String, dynamic>),
+    ),
+  );
+  return val;
+}, fieldKeyMap: const {'serveAll': 'serve_all', 'interface_': 'interface'});
 
 Map<String, dynamic> _$ConfigConfigWebserverToJson(
   ConfigConfigWebserver instance,

@@ -9,7 +9,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'get_queries200_response.g.dart';
 
-
 @CopyWith()
 @JsonSerializable(
   checked: true,
@@ -20,119 +19,65 @@ part 'get_queries200_response.g.dart';
 class GetQueries200Response {
   /// Returns a new [GetQueries200Response] instance.
   GetQueries200Response({
+    this.queries,
 
-     this.queries,
+    this.cursor,
 
-     this.cursor,
+    this.recordsTotal,
 
-     this.recordsTotal,
+    this.recordsFiltered,
 
-     this.recordsFiltered,
+    this.draw,
 
-     this.draw,
-
-     this.took,
+    this.took,
   });
 
-      /// Data array
-  @JsonKey(
-    
-    name: r'queries',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Data array
+  @JsonKey(name: r'queries', required: false, includeIfNull: false)
   final List<SchemasQueriesQueriesInner>? queries;
 
-
-
-      /// Database ID of most recent query to show
-  @JsonKey(
-    
-    name: r'cursor',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Database ID of most recent query to show
+  @JsonKey(name: r'cursor', required: false, includeIfNull: false)
   final int? cursor;
 
-
-
-      /// Total number of available queries
-  @JsonKey(
-    
-    name: r'recordsTotal',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Total number of available queries
+  @JsonKey(name: r'recordsTotal', required: false, includeIfNull: false)
   final int? recordsTotal;
 
-
-
-      /// Number of available queries after filtering
-  @JsonKey(
-    
-    name: r'recordsFiltered',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Number of available queries after filtering
+  @JsonKey(name: r'recordsFiltered', required: false, includeIfNull: false)
   final int? recordsFiltered;
 
-
-
-      /// DataTables-specific integer (echos input value)
-  @JsonKey(
-    
-    name: r'draw',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// DataTables-specific integer (echos input value)
+  @JsonKey(name: r'draw', required: false, includeIfNull: false)
   final int? draw;
 
-
-
-      /// Time in seconds it took to process the request
-  @JsonKey(
-    
-    name: r'took',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Time in seconds it took to process the request
+  @JsonKey(name: r'took', required: false, includeIfNull: false)
   final num? took;
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GetQueries200Response &&
+          other.queries == queries &&
+          other.cursor == cursor &&
+          other.recordsTotal == recordsTotal &&
+          other.recordsFiltered == recordsFiltered &&
+          other.draw == draw &&
+          other.took == took;
 
+  @override
+  int get hashCode =>
+      queries.hashCode +
+      cursor.hashCode +
+      recordsTotal.hashCode +
+      recordsFiltered.hashCode +
+      draw.hashCode +
+      took.hashCode;
 
-
-
-    @override
-    bool operator ==(Object other) => identical(this, other) || other is GetQueries200Response &&
-      other.queries == queries &&
-      other.cursor == cursor &&
-      other.recordsTotal == recordsTotal &&
-      other.recordsFiltered == recordsFiltered &&
-      other.draw == draw &&
-      other.took == took;
-
-    @override
-    int get hashCode =>
-        queries.hashCode +
-        cursor.hashCode +
-        recordsTotal.hashCode +
-        recordsFiltered.hashCode +
-        draw.hashCode +
-        took.hashCode;
-
-  factory GetQueries200Response.fromJson(Map<String, dynamic> json) => _$GetQueries200ResponseFromJson(json);
+  factory GetQueries200Response.fromJson(Map<String, dynamic> json) =>
+      _$GetQueries200ResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetQueries200ResponseToJson(this);
 
@@ -140,6 +85,4 @@ class GetQueries200Response {
   String toString() {
     return toJson().toString();
   }
-
 }
-

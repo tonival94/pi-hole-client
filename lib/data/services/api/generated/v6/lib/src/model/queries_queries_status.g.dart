@@ -273,59 +273,54 @@ extension $QueriesQueriesStatusCopyWith on QueriesQueriesStatus {
 
 QueriesQueriesStatus _$QueriesQueriesStatusFromJson(
   Map<String, dynamic> json,
-) => $checkedCreate(
-  'QueriesQueriesStatus',
-  json,
-  ($checkedConvert) {
-    final val = QueriesQueriesStatus(
-      UNKNOWN: $checkedConvert('UNKNOWN', (v) => (v as num?)?.toInt()),
-      GRAVITY: $checkedConvert('GRAVITY', (v) => (v as num?)?.toInt()),
-      FORWARDED: $checkedConvert('FORWARDED', (v) => (v as num?)?.toInt()),
-      CACHE: $checkedConvert('CACHE', (v) => (v as num?)?.toInt()),
-      REGEX: $checkedConvert('REGEX', (v) => (v as num?)?.toInt()),
-      DENYLIST: $checkedConvert('DENYLIST', (v) => (v as num?)?.toInt()),
-      EXTERNAL_BLOCKED_IP: $checkedConvert(
-        'EXTERNAL_BLOCKED_IP',
-        (v) => (v as num?)?.toInt(),
-      ),
-      EXTERNAL_BLOCKED_NULL: $checkedConvert(
-        'EXTERNAL_BLOCKED_NULL',
-        (v) => (v as num?)?.toInt(),
-      ),
-      EXTERNAL_BLOCKED_NXRA: $checkedConvert(
-        'EXTERNAL_BLOCKED_NXRA',
-        (v) => (v as num?)?.toInt(),
-      ),
-      GRAVITY_CNAME: $checkedConvert(
-        'GRAVITY_CNAME',
-        (v) => (v as num?)?.toInt(),
-      ),
-      REGEX_CNAME: $checkedConvert('REGEX_CNAME', (v) => (v as num?)?.toInt()),
-      DENYLIST_CNAME: $checkedConvert(
-        'DENYLIST_CNAME',
-        (v) => (v as num?)?.toInt(),
-      ),
-      RETRIED: $checkedConvert('RETRIED', (v) => (v as num?)?.toInt()),
-      RETRIED_DNSSEC: $checkedConvert(
-        'RETRIED_DNSSEC',
-        (v) => (v as num?)?.toInt(),
-      ),
-      IN_PROGRESS: $checkedConvert('IN_PROGRESS', (v) => (v as num?)?.toInt()),
-      DBBUSY: $checkedConvert('DBBUSY', (v) => (v as num?)?.toInt()),
-      SPECIAL_DOMAIN: $checkedConvert(
-        'SPECIAL_DOMAIN',
-        (v) => (v as num?)?.toInt(),
-      ),
-      CACHE_STALE: $checkedConvert('CACHE_STALE', (v) => (v as num?)?.toInt()),
-      eXTERNALBLOCKEDEDE15: $checkedConvert(
-        'EXTERNAL_BLOCKED_EDE15',
-        (v) => (v as num?)?.toInt(),
-      ),
-    );
-    return val;
-  },
-  fieldKeyMap: const {'eXTERNALBLOCKEDEDE15': 'EXTERNAL_BLOCKED_EDE15'},
-);
+) => $checkedCreate('QueriesQueriesStatus', json, ($checkedConvert) {
+  final val = QueriesQueriesStatus(
+    UNKNOWN: $checkedConvert('UNKNOWN', (v) => (v as num?)?.toInt()),
+    GRAVITY: $checkedConvert('GRAVITY', (v) => (v as num?)?.toInt()),
+    FORWARDED: $checkedConvert('FORWARDED', (v) => (v as num?)?.toInt()),
+    CACHE: $checkedConvert('CACHE', (v) => (v as num?)?.toInt()),
+    REGEX: $checkedConvert('REGEX', (v) => (v as num?)?.toInt()),
+    DENYLIST: $checkedConvert('DENYLIST', (v) => (v as num?)?.toInt()),
+    EXTERNAL_BLOCKED_IP: $checkedConvert(
+      'EXTERNAL_BLOCKED_IP',
+      (v) => (v as num?)?.toInt(),
+    ),
+    EXTERNAL_BLOCKED_NULL: $checkedConvert(
+      'EXTERNAL_BLOCKED_NULL',
+      (v) => (v as num?)?.toInt(),
+    ),
+    EXTERNAL_BLOCKED_NXRA: $checkedConvert(
+      'EXTERNAL_BLOCKED_NXRA',
+      (v) => (v as num?)?.toInt(),
+    ),
+    GRAVITY_CNAME: $checkedConvert(
+      'GRAVITY_CNAME',
+      (v) => (v as num?)?.toInt(),
+    ),
+    REGEX_CNAME: $checkedConvert('REGEX_CNAME', (v) => (v as num?)?.toInt()),
+    DENYLIST_CNAME: $checkedConvert(
+      'DENYLIST_CNAME',
+      (v) => (v as num?)?.toInt(),
+    ),
+    RETRIED: $checkedConvert('RETRIED', (v) => (v as num?)?.toInt()),
+    RETRIED_DNSSEC: $checkedConvert(
+      'RETRIED_DNSSEC',
+      (v) => (v as num?)?.toInt(),
+    ),
+    IN_PROGRESS: $checkedConvert('IN_PROGRESS', (v) => (v as num?)?.toInt()),
+    DBBUSY: $checkedConvert('DBBUSY', (v) => (v as num?)?.toInt()),
+    SPECIAL_DOMAIN: $checkedConvert(
+      'SPECIAL_DOMAIN',
+      (v) => (v as num?)?.toInt(),
+    ),
+    CACHE_STALE: $checkedConvert('CACHE_STALE', (v) => (v as num?)?.toInt()),
+    eXTERNALBLOCKEDEDE15: $checkedConvert(
+      'EXTERNAL_BLOCKED_EDE15',
+      (v) => (v as num?)?.toInt(),
+    ),
+  );
+  return val;
+}, fieldKeyMap: const {'eXTERNALBLOCKEDEDE15': 'EXTERNAL_BLOCKED_EDE15'});
 
 Map<String, dynamic> _$QueriesQueriesStatusToJson(
   QueriesQueriesStatus instance,

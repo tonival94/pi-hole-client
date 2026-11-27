@@ -18,7 +18,8 @@ mixin _$AppLog {
  String get type; DateTime get dateTime;/// A short summary, e.g. `Failed to connect`.
  String get message;/// The address of the server the log is about.
  String? get serverAddress;/// The error, e.g. the exception text.
- String? get details; String? get statusCode;
+ String? get details;/// If the log is about an HTTP request, the status code of the response.
+ String? get statusCode;
 /// Create a copy of AppLog
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -225,6 +226,7 @@ class _AppLog implements AppLog {
 @override final  String? serverAddress;
 /// The error, e.g. the exception text.
 @override final  String? details;
+/// If the log is about an HTTP request, the status code of the response.
 @override final  String? statusCode;
 
 /// Create a copy of AppLog

@@ -108,26 +108,21 @@ extension $ConfigConfigDatabaseCopyWith on ConfigConfigDatabase {
 
 ConfigConfigDatabase _$ConfigConfigDatabaseFromJson(
   Map<String, dynamic> json,
-) => $checkedCreate(
-  'ConfigConfigDatabase',
-  json,
-  ($checkedConvert) {
-    final val = ConfigConfigDatabase(
-      dBimport: $checkedConvert('DBimport', (v) => v as bool?),
-      maxDBdays: $checkedConvert('maxDBdays', (v) => (v as num?)?.toInt()),
-      dBinterval: $checkedConvert('DBinterval', (v) => (v as num?)?.toInt()),
-      useWAL: $checkedConvert('useWAL', (v) => v as bool?),
-      network: $checkedConvert(
-        'network',
-        (v) => v == null
-            ? null
-            : ConfigConfigDatabaseNetwork.fromJson(v as Map<String, dynamic>),
-      ),
-    );
-    return val;
-  },
-  fieldKeyMap: const {'dBimport': 'DBimport', 'dBinterval': 'DBinterval'},
-);
+) => $checkedCreate('ConfigConfigDatabase', json, ($checkedConvert) {
+  final val = ConfigConfigDatabase(
+    dBimport: $checkedConvert('DBimport', (v) => v as bool?),
+    maxDBdays: $checkedConvert('maxDBdays', (v) => (v as num?)?.toInt()),
+    dBinterval: $checkedConvert('DBinterval', (v) => (v as num?)?.toInt()),
+    useWAL: $checkedConvert('useWAL', (v) => v as bool?),
+    network: $checkedConvert(
+      'network',
+      (v) => v == null
+          ? null
+          : ConfigConfigDatabaseNetwork.fromJson(v as Map<String, dynamic>),
+    ),
+  );
+  return val;
+}, fieldKeyMap: const {'dBimport': 'DBimport', 'dBinterval': 'DBinterval'});
 
 Map<String, dynamic> _$ConfigConfigDatabaseToJson(
   ConfigConfigDatabase instance,

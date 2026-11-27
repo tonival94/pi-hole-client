@@ -89,26 +89,21 @@ extension $PostTeleporterRequestImportCopyWith on PostTeleporterRequestImport {
 
 PostTeleporterRequestImport _$PostTeleporterRequestImportFromJson(
   Map<String, dynamic> json,
-) => $checkedCreate(
-  'PostTeleporterRequestImport',
-  json,
-  ($checkedConvert) {
-    final val = PostTeleporterRequestImport(
-      config: $checkedConvert('config', (v) => v as bool?),
-      dhcpLeases: $checkedConvert('dhcp_leases', (v) => v as bool?),
-      gravity: $checkedConvert(
-        'gravity',
-        (v) => v == null
-            ? null
-            : PostTeleporterRequestImportGravity.fromJson(
-                v as Map<String, dynamic>,
-              ),
-      ),
-    );
-    return val;
-  },
-  fieldKeyMap: const {'dhcpLeases': 'dhcp_leases'},
-);
+) => $checkedCreate('PostTeleporterRequestImport', json, ($checkedConvert) {
+  final val = PostTeleporterRequestImport(
+    config: $checkedConvert('config', (v) => v as bool?),
+    dhcpLeases: $checkedConvert('dhcp_leases', (v) => v as bool?),
+    gravity: $checkedConvert(
+      'gravity',
+      (v) => v == null
+          ? null
+          : PostTeleporterRequestImportGravity.fromJson(
+              v as Map<String, dynamic>,
+            ),
+    ),
+  );
+  return val;
+}, fieldKeyMap: const {'dhcpLeases': 'dhcp_leases'});
 
 Map<String, dynamic> _$PostTeleporterRequestImportToJson(
   PostTeleporterRequestImport instance,

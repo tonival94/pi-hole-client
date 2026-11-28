@@ -82,32 +82,27 @@ extension $InterfacesInterfacesInnerStatsCopyWith
 
 InterfacesInterfacesInnerStats _$InterfacesInterfacesInnerStatsFromJson(
   Map<String, dynamic> json,
-) => $checkedCreate(
-  'InterfacesInterfacesInnerStats',
-  json,
-  ($checkedConvert) {
-    final val = InterfacesInterfacesInnerStats(
-      rxBytes: $checkedConvert(
-        'rx_bytes',
-        (v) => v == null
-            ? null
-            : InterfacesInterfacesInnerStatsRxBytes.fromJson(
-                v as Map<String, dynamic>,
-              ),
-      ),
-      txBytes: $checkedConvert(
-        'tx_bytes',
-        (v) => v == null
-            ? null
-            : InterfacesInterfacesInnerStatsTxBytes.fromJson(
-                v as Map<String, dynamic>,
-              ),
-      ),
-    );
-    return val;
-  },
-  fieldKeyMap: const {'rxBytes': 'rx_bytes', 'txBytes': 'tx_bytes'},
-);
+) => $checkedCreate('InterfacesInterfacesInnerStats', json, ($checkedConvert) {
+  final val = InterfacesInterfacesInnerStats(
+    rxBytes: $checkedConvert(
+      'rx_bytes',
+      (v) => v == null
+          ? null
+          : InterfacesInterfacesInnerStatsRxBytes.fromJson(
+              v as Map<String, dynamic>,
+            ),
+    ),
+    txBytes: $checkedConvert(
+      'tx_bytes',
+      (v) => v == null
+          ? null
+          : InterfacesInterfacesInnerStatsTxBytes.fromJson(
+              v as Map<String, dynamic>,
+            ),
+    ),
+  );
+  return val;
+}, fieldKeyMap: const {'rxBytes': 'rx_bytes', 'txBytes': 'tx_bytes'});
 
 Map<String, dynamic> _$InterfacesInterfacesInnerStatsToJson(
   InterfacesInterfacesInnerStats instance,

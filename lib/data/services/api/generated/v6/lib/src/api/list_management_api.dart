@@ -20,13 +20,12 @@ import 'package:pihole_v6_api/src/model/replace_lists200_response.dart';
 import 'package:pihole_v6_api/src/model/took.dart';
 
 class ListManagementApi {
-
   final Dio _dio;
 
   const ListManagementApi(this._dio);
 
   /// Add new list
-  /// Creates a new list in the &#x60;lists&#x60; object. The &#x60;{list}&#x60; itself is specified in the request body (POST JSON).  lists may be described either by their IP addresses (IPv4 and IPv6 are supported), IP subnets (CIDR notation, like &#x60;192.168.2.0/24&#x60;), their MAC addresses (like &#x60;12:34:56:78:9A:BC&#x60;), by their hostnames (like &#x60;localhost&#x60;), or by the interface they are connected to (prefaced with a colon, like &#x60;:eth0&#x60;).&lt;/p&gt;  Note that list recognition by IP addresses (incl. subnet ranges) is preferred over MAC address, host name or interface recognition as the two latter will only be available after some time. Furthermore, MAC address recognition only works for devices at most one networking hop away from your Pi-hole.  On success, a new resource is created at &#x60;/lists/{list}&#x60;.  The &#x60;database_error&#x60; with message &#x60;UNIQUE constraint failed&#x60; error indicates that this list already exists. 
+  /// Creates a new list in the &#x60;lists&#x60; object. The &#x60;{list}&#x60; itself is specified in the request body (POST JSON).  lists may be described either by their IP addresses (IPv4 and IPv6 are supported), IP subnets (CIDR notation, like &#x60;192.168.2.0/24&#x60;), their MAC addresses (like &#x60;12:34:56:78:9A:BC&#x60;), by their hostnames (like &#x60;localhost&#x60;), or by the interface they are connected to (prefaced with a colon, like &#x60;:eth0&#x60;).&lt;/p&gt;  Note that list recognition by IP addresses (incl. subnet ranges) is preferred over MAC address, host name or interface recognition as the two latter will only be available after some time. Furthermore, MAC address recognition only works for devices at most one networking hop away from your Pi-hole.  On success, a new resource is created at &#x60;/lists/{list}&#x60;.  The &#x60;database_error&#x60; with message &#x60;UNIQUE constraint failed&#x60; error indicates that this list already exists.
   ///
   /// Parameters:
   /// * [type] - Type of list
@@ -40,7 +39,7 @@ class ListManagementApi {
   ///
   /// Returns a [Future] containing a [Response] with a [ReplaceLists200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ReplaceLists200Response>> addList({ 
+  Future<Response<ReplaceLists200Response>> addList({
     required String type,
     ListsPost? listsPost,
     CancelToken? cancelToken,
@@ -53,9 +52,7 @@ class ListManagementApi {
     final _path = r'/lists';
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
@@ -63,17 +60,20 @@ class ListManagementApi {
             'name': 'x_header_sid',
             'keyName': 'X-FTL-SID',
             'where': 'header',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'query_sid',
             'keyName': 'sid',
             'where': 'query',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'cookie_sid',
             'keyName': 'sid',
             'where': '',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'header_sid',
             'keyName': 'sid',
@@ -86,17 +86,15 @@ class ListManagementApi {
       validateStatus: validateStatus,
     );
 
-    final _queryParameters = <String, dynamic>{
-      r'type': type,
-    };
+    final _queryParameters = <String, dynamic>{r'type': type};
 
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(listsPost);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(listsPost);
+    } catch (error, stackTrace) {
       throw DioException(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
           queryParameters: _queryParameters,
@@ -120,9 +118,14 @@ _bodyData=jsonEncode(listsPost);
     ReplaceLists200Response? _responseData;
 
     try {
-final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<ReplaceLists200Response, ReplaceLists200Response>(rawData, 'ReplaceLists200Response', growable: true);
-
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ReplaceLists200Response, ReplaceLists200Response>(
+              rawData,
+              'ReplaceLists200Response',
+              growable: true,
+            );
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -146,7 +149,7 @@ _responseData = rawData == null ? null : deserialize<ReplaceLists200Response, Re
   }
 
   /// Delete lists
-  /// Deletes multiple lists in the &#x60;lists&#x60; object. The &#x60;{list}&#x60;s themselves are specified in the request body (POST JSON). 
+  /// Deletes multiple lists in the &#x60;lists&#x60; object. The &#x60;{list}&#x60;s themselves are specified in the request body (POST JSON).
   ///
   /// Parameters:
   /// * [batchDeleteListsRequestInner] - Callback payload
@@ -159,7 +162,7 @@ _responseData = rawData == null ? null : deserialize<ReplaceLists200Response, Re
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> batchDeleteLists({ 
+  Future<Response<void>> batchDeleteLists({
     required List<BatchDeleteListsRequestInner> batchDeleteListsRequestInner,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -171,9 +174,7 @@ _responseData = rawData == null ? null : deserialize<ReplaceLists200Response, Re
     final _path = r'/lists:batchDelete';
     final _options = Options(
       method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
@@ -181,17 +182,20 @@ _responseData = rawData == null ? null : deserialize<ReplaceLists200Response, Re
             'name': 'x_header_sid',
             'keyName': 'X-FTL-SID',
             'where': 'header',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'query_sid',
             'keyName': 'sid',
             'where': 'query',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'cookie_sid',
             'keyName': 'sid',
             'where': '',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'header_sid',
             'keyName': 'sid',
@@ -207,13 +211,10 @@ _responseData = rawData == null ? null : deserialize<ReplaceLists200Response, Re
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(batchDeleteListsRequestInner);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(batchDeleteListsRequestInner);
+    } catch (error, stackTrace) {
       throw DioException(
-         requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
+        requestOptions: _options.compose(_dio.options, _path),
         type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
@@ -233,7 +234,7 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
   }
 
   /// Delete list
-  /// &#x60;{list}&#x60; and &#x60;{listtype}&#x60; are required. *Note:* There will be no content on success. 
+  /// &#x60;{list}&#x60; and &#x60;{listtype}&#x60; are required. *Note:* There will be no content on success.
   ///
   /// Parameters:
   /// * [list] - Address of the list
@@ -247,7 +248,7 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
   ///
   /// Returns a [Future]
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> deleteLists({ 
+  Future<Response<void>> deleteLists({
     required String list,
     required String type,
     CancelToken? cancelToken,
@@ -257,12 +258,15 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/lists/{list}'.replaceAll('{' r'list' '}', list.toString());
+    final _path = r'/lists/{list}'.replaceAll(
+      '{'
+      r'list'
+      '}',
+      list.toString(),
+    );
     final _options = Options(
       method: r'DELETE',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
@@ -270,17 +274,20 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
             'name': 'x_header_sid',
             'keyName': 'X-FTL-SID',
             'where': 'header',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'query_sid',
             'keyName': 'sid',
             'where': 'query',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'cookie_sid',
             'keyName': 'sid',
             'where': '',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'header_sid',
             'keyName': 'sid',
@@ -292,9 +299,7 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
       validateStatus: validateStatus,
     );
 
-    final _queryParameters = <String, dynamic>{
-      r'type': type,
-    };
+    final _queryParameters = <String, dynamic>{r'type': type};
 
     final _response = await _dio.request<Object>(
       _path,
@@ -309,7 +314,7 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
   }
 
   /// Get all lists
-  /// Returns all configured lists. Optionally filter by list type. 
+  /// Returns all configured lists. Optionally filter by list type.
   ///
   /// Parameters:
   /// * [type] - Type of list, optional
@@ -322,7 +327,7 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
   ///
   /// Returns a [Future] containing a [Response] with a [GetLists200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<GetLists200Response>> getAllLists({ 
+  Future<Response<GetLists200Response>> getAllLists({
     String? type,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -334,9 +339,7 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
     final _path = r'/lists';
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
@@ -344,17 +347,20 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
             'name': 'x_header_sid',
             'keyName': 'X-FTL-SID',
             'where': 'header',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'query_sid',
             'keyName': 'sid',
             'where': 'query',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'cookie_sid',
             'keyName': 'sid',
             'where': '',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'header_sid',
             'keyName': 'sid',
@@ -366,9 +372,7 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
       validateStatus: validateStatus,
     );
 
-    final _queryParameters = <String, dynamic>{
-      if (type != null) r'type': type,
-    };
+    final _queryParameters = <String, dynamic>{if (type != null) r'type': type};
 
     final _response = await _dio.request<Object>(
       _path,
@@ -382,9 +386,14 @@ _bodyData=jsonEncode(batchDeleteListsRequestInner);
     GetLists200Response? _responseData;
 
     try {
-final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<GetLists200Response, GetLists200Response>(rawData, 'GetLists200Response', growable: true);
-
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<GetLists200Response, GetLists200Response>(
+              rawData,
+              'GetLists200Response',
+              growable: true,
+            );
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -408,7 +417,7 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
   }
 
   /// Get lists
-  /// &#x60;{list}&#x60; is optional. Specifying it will result in only the requested list being returned.  Valid combinations are: - &#x60;/api/lists&#x60; (all lists) - &#x60;/api/lists/my_list&#x60; (list identical to &#x60;my_list&#x60;) 
+  /// &#x60;{list}&#x60; is optional. Specifying it will result in only the requested list being returned.  Valid combinations are: - &#x60;/api/lists&#x60; (all lists) - &#x60;/api/lists/my_list&#x60; (list identical to &#x60;my_list&#x60;)
   ///
   /// Parameters:
   /// * [list] - Address of the list
@@ -422,7 +431,7 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
   ///
   /// Returns a [Future] containing a [Response] with a [GetLists200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<GetLists200Response>> getLists({ 
+  Future<Response<GetLists200Response>> getLists({
     required String list,
     String? type,
     CancelToken? cancelToken,
@@ -432,12 +441,15 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/lists/{list}'.replaceAll('{' r'list' '}', list.toString());
+    final _path = r'/lists/{list}'.replaceAll(
+      '{'
+      r'list'
+      '}',
+      list.toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
@@ -445,17 +457,20 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
             'name': 'x_header_sid',
             'keyName': 'X-FTL-SID',
             'where': 'header',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'query_sid',
             'keyName': 'sid',
             'where': 'query',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'cookie_sid',
             'keyName': 'sid',
             'where': '',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'header_sid',
             'keyName': 'sid',
@@ -467,9 +482,7 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
       validateStatus: validateStatus,
     );
 
-    final _queryParameters = <String, dynamic>{
-      if (type != null) r'type': type,
-    };
+    final _queryParameters = <String, dynamic>{if (type != null) r'type': type};
 
     final _response = await _dio.request<Object>(
       _path,
@@ -483,9 +496,14 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
     GetLists200Response? _responseData;
 
     try {
-final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<GetLists200Response, GetLists200Response>(rawData, 'GetLists200Response', growable: true);
-
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<GetLists200Response, GetLists200Response>(
+              rawData,
+              'GetLists200Response',
+              growable: true,
+            );
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -509,7 +527,7 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
   }
 
   /// Search domains in Pi-hole&#39;s lists
-  /// Search for domains in Pi-hole&#39;s list. The specified domain is automatically converted to lowercase. The optional parameters &#x60;N&#x60; and &#x60;partial&#x60; limit the maximum number of returned records and whether partial matches should be returned, respectively. There is a hard upper limit of &#x60;N&#x60; defined in FTL (currently set to 10,000) to ensure that the response is not too large. ABP matches are not returned when partial matching is requested. International domains names (IDNs) are internally converted to punycode before matching. 
+  /// Search for domains in Pi-hole&#39;s list. The specified domain is automatically converted to lowercase. The optional parameters &#x60;N&#x60; and &#x60;partial&#x60; limit the maximum number of returned records and whether partial matches should be returned, respectively. There is a hard upper limit of &#x60;N&#x60; defined in FTL (currently set to 10,000) to ensure that the response is not too large. ABP matches are not returned when partial matching is requested. International domains names (IDNs) are internally converted to punycode before matching.
   ///
   /// Parameters:
   /// * [domain] - (Part of) domain to be searched for
@@ -525,7 +543,7 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
   ///
   /// Returns a [Future] containing a [Response] with a [GetSearch200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<GetSearch200Response>> getSearch({ 
+  Future<Response<GetSearch200Response>> getSearch({
     required String domain,
     bool? partial = false,
     int? N = 20,
@@ -537,12 +555,15 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/search/{domain}'.replaceAll('{' r'domain' '}', domain.toString());
+    final _path = r'/search/{domain}'.replaceAll(
+      '{'
+      r'domain'
+      '}',
+      domain.toString(),
+    );
     final _options = Options(
       method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
@@ -550,17 +571,20 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
             'name': 'x_header_sid',
             'keyName': 'X-FTL-SID',
             'where': 'header',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'query_sid',
             'keyName': 'sid',
             'where': 'query',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'cookie_sid',
             'keyName': 'sid',
             'where': '',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'header_sid',
             'keyName': 'sid',
@@ -590,9 +614,14 @@ _responseData = rawData == null ? null : deserialize<GetLists200Response, GetLis
     GetSearch200Response? _responseData;
 
     try {
-final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<GetSearch200Response, GetSearch200Response>(rawData, 'GetSearch200Response', growable: true);
-
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<GetSearch200Response, GetSearch200Response>(
+              rawData,
+              'GetSearch200Response',
+              growable: true,
+            );
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -616,7 +645,7 @@ _responseData = rawData == null ? null : deserialize<GetSearch200Response, GetSe
   }
 
   /// Replace list
-  /// Items may be updated by replacing them. &#x60;{list}&#x60; and &#x60;{listtype}&#x60; are required.  Ensure to send all the required parameters (such as &#x60;comment&#x60;) to ensure these properties are retained. The read-only fields &#x60;id&#x60; and &#x60;date_added&#x60; are preserved, &#x60;date_modified&#x60; is automatically updated on success. 
+  /// Items may be updated by replacing them. &#x60;{list}&#x60; and &#x60;{listtype}&#x60; are required.  Ensure to send all the required parameters (such as &#x60;comment&#x60;) to ensure these properties are retained. The read-only fields &#x60;id&#x60; and &#x60;date_added&#x60; are preserved, &#x60;date_modified&#x60; is automatically updated on success.
   ///
   /// Parameters:
   /// * [list] - Address of the list
@@ -631,7 +660,7 @@ _responseData = rawData == null ? null : deserialize<GetSearch200Response, GetSe
   ///
   /// Returns a [Future] containing a [Response] with a [ReplaceLists200Response] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ReplaceLists200Response>> replaceLists({ 
+  Future<Response<ReplaceLists200Response>> replaceLists({
     required String list,
     required String type,
     ListsPut? listsPut,
@@ -642,12 +671,15 @@ _responseData = rawData == null ? null : deserialize<GetSearch200Response, GetSe
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/lists/{list}'.replaceAll('{' r'list' '}', list.toString());
+    final _path = r'/lists/{list}'.replaceAll(
+      '{'
+      r'list'
+      '}',
+      list.toString(),
+    );
     final _options = Options(
       method: r'PUT',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
+      headers: <String, dynamic>{...?headers},
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
@@ -655,17 +687,20 @@ _responseData = rawData == null ? null : deserialize<GetSearch200Response, GetSe
             'name': 'x_header_sid',
             'keyName': 'X-FTL-SID',
             'where': 'header',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'query_sid',
             'keyName': 'sid',
             'where': 'query',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'cookie_sid',
             'keyName': 'sid',
             'where': '',
-          },{
+          },
+          {
             'type': 'apiKey',
             'name': 'header_sid',
             'keyName': 'sid',
@@ -678,17 +713,15 @@ _responseData = rawData == null ? null : deserialize<GetSearch200Response, GetSe
       validateStatus: validateStatus,
     );
 
-    final _queryParameters = <String, dynamic>{
-      r'type': type,
-    };
+    final _queryParameters = <String, dynamic>{r'type': type};
 
     dynamic _bodyData;
 
     try {
-_bodyData=jsonEncode(listsPut);
-    } catch(error, stackTrace) {
+      _bodyData = jsonEncode(listsPut);
+    } catch (error, stackTrace) {
       throw DioException(
-         requestOptions: _options.compose(
+        requestOptions: _options.compose(
           _dio.options,
           _path,
           queryParameters: _queryParameters,
@@ -712,9 +745,14 @@ _bodyData=jsonEncode(listsPut);
     ReplaceLists200Response? _responseData;
 
     try {
-final rawData = _response.data;
-_responseData = rawData == null ? null : deserialize<ReplaceLists200Response, ReplaceLists200Response>(rawData, 'ReplaceLists200Response', growable: true);
-
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ReplaceLists200Response, ReplaceLists200Response>(
+              rawData,
+              'ReplaceLists200Response',
+              growable: true,
+            );
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _response.requestOptions,
@@ -736,5 +774,4 @@ _responseData = rawData == null ? null : deserialize<ReplaceLists200Response, Re
       extra: _response.extra,
     );
   }
-
 }

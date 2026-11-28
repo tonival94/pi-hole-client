@@ -67,18 +67,13 @@ extension $SystemSystemFtlCopyWith on SystemSystemFtl {
 // **************************************************************************
 
 SystemSystemFtl _$SystemSystemFtlFromJson(Map<String, dynamic> json) =>
-    $checkedCreate(
-      'SystemSystemFtl',
-      json,
-      ($checkedConvert) {
-        final val = SystemSystemFtl(
-          percentMem: $checkedConvert('%mem', (v) => v as num?),
-          percentCpu: $checkedConvert('%cpu', (v) => v as num?),
-        );
-        return val;
-      },
-      fieldKeyMap: const {'percentMem': '%mem', 'percentCpu': '%cpu'},
-    );
+    $checkedCreate('SystemSystemFtl', json, ($checkedConvert) {
+      final val = SystemSystemFtl(
+        percentMem: $checkedConvert('%mem', (v) => v as num?),
+        percentCpu: $checkedConvert('%cpu', (v) => v as num?),
+      );
+      return val;
+    }, fieldKeyMap: const {'percentMem': '%mem', 'percentCpu': '%cpu'});
 
 Map<String, dynamic> _$SystemSystemFtlToJson(SystemSystemFtl instance) =>
     <String, dynamic>{

@@ -76,19 +76,15 @@ extension $PaddSensorsCopyWith on PaddSensors {
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaddSensors _$PaddSensorsFromJson(Map<String, dynamic> json) => $checkedCreate(
-  'PaddSensors',
-  json,
-  ($checkedConvert) {
-    final val = PaddSensors(
-      cpuTemp: $checkedConvert('cpu_temp', (v) => v as num?),
-      hotLimit: $checkedConvert('hot_limit', (v) => v as num?),
-      unit: $checkedConvert('unit', (v) => v as String?),
-    );
-    return val;
-  },
-  fieldKeyMap: const {'cpuTemp': 'cpu_temp', 'hotLimit': 'hot_limit'},
-);
+PaddSensors _$PaddSensorsFromJson(Map<String, dynamic> json) =>
+    $checkedCreate('PaddSensors', json, ($checkedConvert) {
+      final val = PaddSensors(
+        cpuTemp: $checkedConvert('cpu_temp', (v) => v as num?),
+        hotLimit: $checkedConvert('hot_limit', (v) => v as num?),
+        unit: $checkedConvert('unit', (v) => v as String?),
+      );
+      return val;
+    }, fieldKeyMap: const {'cpuTemp': 'cpu_temp', 'hotLimit': 'hot_limit'});
 
 Map<String, dynamic> _$PaddSensorsToJson(PaddSensors instance) =>
     <String, dynamic>{

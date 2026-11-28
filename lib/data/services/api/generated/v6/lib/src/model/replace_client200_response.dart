@@ -10,7 +10,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'replace_client200_response.g.dart';
 
-
 @CopyWith()
 @JsonSerializable(
   checked: true,
@@ -20,68 +19,35 @@ part 'replace_client200_response.g.dart';
 )
 class ReplaceClient200Response {
   /// Returns a new [ReplaceClient200Response] instance.
-  ReplaceClient200Response({
+  ReplaceClient200Response({this.clients, this.processed, this.took});
 
-     this.clients,
-
-     this.processed,
-
-     this.took,
-  });
-
-      /// Array of clients
-  @JsonKey(
-    
-    name: r'clients',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Array of clients
+  @JsonKey(name: r'clients', required: false, includeIfNull: false)
   final List<ClientsGetClientsInner>? clients;
 
-
-
-  @JsonKey(
-    
-    name: r'processed',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  @JsonKey(name: r'processed', required: false, includeIfNull: false)
   final ComponentsSchemasListsProcessedProcessed? processed;
 
-
-
-      /// Time in seconds it took to process the request
-  @JsonKey(
-    
-    name: r'took',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Time in seconds it took to process the request
+  @JsonKey(name: r'took', required: false, includeIfNull: false)
   final num? took;
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ReplaceClient200Response &&
+          other.clients == clients &&
+          other.processed == processed &&
+          other.took == took;
 
+  @override
+  int get hashCode =>
+      clients.hashCode +
+      (processed == null ? 0 : processed.hashCode) +
+      took.hashCode;
 
-
-
-    @override
-    bool operator ==(Object other) => identical(this, other) || other is ReplaceClient200Response &&
-      other.clients == clients &&
-      other.processed == processed &&
-      other.took == took;
-
-    @override
-    int get hashCode =>
-        clients.hashCode +
-        (processed == null ? 0 : processed.hashCode) +
-        took.hashCode;
-
-  factory ReplaceClient200Response.fromJson(Map<String, dynamic> json) => _$ReplaceClient200ResponseFromJson(json);
+  factory ReplaceClient200Response.fromJson(Map<String, dynamic> json) =>
+      _$ReplaceClient200ResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReplaceClient200ResponseToJson(this);
 
@@ -89,6 +55,4 @@ class ReplaceClient200Response {
   String toString() {
     return toJson().toString();
   }
-
 }
-

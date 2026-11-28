@@ -9,7 +9,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'get_groups200_response.g.dart';
 
-
 @CopyWith()
 @JsonSerializable(
   checked: true,
@@ -19,51 +18,27 @@ part 'get_groups200_response.g.dart';
 )
 class GetGroups200Response {
   /// Returns a new [GetGroups200Response] instance.
-  GetGroups200Response({
+  GetGroups200Response({this.groups, this.took});
 
-     this.groups,
-
-     this.took,
-  });
-
-  @JsonKey(
-    
-    name: r'groups',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  @JsonKey(name: r'groups', required: false, includeIfNull: false)
   final List<GroupsGetGroupsInner>? groups;
 
-
-
-      /// Time in seconds it took to process the request
-  @JsonKey(
-    
-    name: r'took',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Time in seconds it took to process the request
+  @JsonKey(name: r'took', required: false, includeIfNull: false)
   final num? took;
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GetGroups200Response &&
+          other.groups == groups &&
+          other.took == took;
 
+  @override
+  int get hashCode => groups.hashCode + took.hashCode;
 
-
-
-    @override
-    bool operator ==(Object other) => identical(this, other) || other is GetGroups200Response &&
-      other.groups == groups &&
-      other.took == took;
-
-    @override
-    int get hashCode =>
-        groups.hashCode +
-        took.hashCode;
-
-  factory GetGroups200Response.fromJson(Map<String, dynamic> json) => _$GetGroups200ResponseFromJson(json);
+  factory GetGroups200Response.fromJson(Map<String, dynamic> json) =>
+      _$GetGroups200ResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetGroups200ResponseToJson(this);
 
@@ -71,6 +46,4 @@ class GetGroups200Response {
   String toString() {
     return toJson().toString();
   }
-
 }
-

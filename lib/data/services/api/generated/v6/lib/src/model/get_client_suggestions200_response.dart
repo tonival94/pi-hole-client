@@ -9,7 +9,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'get_client_suggestions200_response.g.dart';
 
-
 @CopyWith()
 @JsonSerializable(
   checked: true,
@@ -19,58 +18,33 @@ part 'get_client_suggestions200_response.g.dart';
 )
 class GetClientSuggestions200Response {
   /// Returns a new [GetClientSuggestions200Response] instance.
-  GetClientSuggestions200Response({
+  GetClientSuggestions200Response({this.clients, this.took});
 
-     this.clients,
-
-     this.took,
-  });
-
-  @JsonKey(
-    
-    name: r'clients',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  @JsonKey(name: r'clients', required: false, includeIfNull: false)
   final List<SchemasSuggestionsClientsInner>? clients;
 
-
-
-      /// Time in seconds it took to process the request
-  @JsonKey(
-    
-    name: r'took',
-    required: false,
-    includeIfNull: false,
-  )
-
-
+  /// Time in seconds it took to process the request
+  @JsonKey(name: r'took', required: false, includeIfNull: false)
   final num? took;
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GetClientSuggestions200Response &&
+          other.clients == clients &&
+          other.took == took;
 
+  @override
+  int get hashCode => clients.hashCode + took.hashCode;
 
+  factory GetClientSuggestions200Response.fromJson(Map<String, dynamic> json) =>
+      _$GetClientSuggestions200ResponseFromJson(json);
 
-
-    @override
-    bool operator ==(Object other) => identical(this, other) || other is GetClientSuggestions200Response &&
-      other.clients == clients &&
-      other.took == took;
-
-    @override
-    int get hashCode =>
-        clients.hashCode +
-        took.hashCode;
-
-  factory GetClientSuggestions200Response.fromJson(Map<String, dynamic> json) => _$GetClientSuggestions200ResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$GetClientSuggestions200ResponseToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$GetClientSuggestions200ResponseToJson(this);
 
   @override
   String toString() {
     return toJson().toString();
   }
-
 }
-

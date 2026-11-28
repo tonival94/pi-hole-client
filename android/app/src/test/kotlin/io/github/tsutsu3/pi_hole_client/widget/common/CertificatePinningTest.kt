@@ -13,7 +13,11 @@ import javax.net.ssl.X509TrustManager
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+// Robolectric provides android.util.Log, used on a pin mismatch in debug builds.
+@RunWith(RobolectricTestRunner::class)
 class CertificatePinningTest {
 
     private val pinnedBytes = "pinned certificate".toByteArray()

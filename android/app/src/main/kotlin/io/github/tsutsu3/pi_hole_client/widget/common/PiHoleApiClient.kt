@@ -9,6 +9,7 @@ import java.net.SocketTimeoutException
 import java.net.URL
 import java.net.UnknownHostException
 import kotlinx.coroutines.delay
+import java.security.KeyStore
 import java.security.MessageDigest
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
@@ -16,7 +17,9 @@ import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLException
+import javax.net.ssl.SSLSession
 import javax.net.ssl.TrustManager
+import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
 /**
@@ -85,7 +88,7 @@ data class ApiResponse(val statusCode: Int, val body: String) {
  * | ignoreCertErrors | allowUntrustedCert | pinnedSha256 | Behaviour               |
  * |------------------|-----------------|--------------|-------------------------|
  * | true             | any             | any          | Skip all TLS validation |
- * | false            | true            | non-null     | Verify SHA-256 pin      |
+ * | false            | true            | non-null     | Standard TLS, else pin  |
  * | false            | true            | null         | Reject (pin required)   |
  * | false            | false           | any          | Standard TLS            |
  */
@@ -212,7 +215,7 @@ class PiHoleApiClient(
      *
      * Priority order matches Flutter's `createHttpClient()`:
      * 1. `ignoreCertificateErrors` - trust everything (legacy / explicit opt-in)
-     * 2. `allowUntrustedCert` with pin - verify SHA-256 fingerprint
+     * 2. `allowUntrustedCert` with pin - standard TLS first, SHA-256 pin as fallback
      * 3. default - standard platform TLS validation
      *
      * Note: `allowUntrustedCert` without a pin is rejected before reaching this
@@ -231,16 +234,15 @@ class PiHoleApiClient(
             }
 
             allowUntrustedCert && !pinnedCertificateSha256.isNullOrEmpty() -> {
-                // Accept only if the server certificate's SHA-256 fingerprint
-                // matches the pinned value configured in the app.
+                // Like Flutter's badCertificateCallback: a certificate that
+                // passes standard validation is accepted; the pin is only
+                // checked when it does not. A publicly trusted certificate
+                // that was renewed after pinning keeps working.
                 val pinningManager = CertificatePinningTrustManager(pinnedCertificateSha256)
                 val sslContext = SSLContext.getInstance("TLS")
                 sslContext.init(null, arrayOf<TrustManager>(pinningManager), java.security.SecureRandom())
                 connection.sslSocketFactory = sslContext.socketFactory
-                // Hostname verification is relaxed because the certificate is
-                // pinned by fingerprint, not by CN/SAN - untrusted signed certs
-                // typically lack a matching hostname entry.
-                connection.hostnameVerifier = HostnameVerifier { _, _ -> true }
+                connection.hostnameVerifier = PinnedHostnameVerifier(pinnedCertificateSha256)
             }
 
             // else: standard platform TLS - no custom configuration needed.
@@ -314,14 +316,38 @@ class PiHoleApiClient(
     }
 
     /**
-     * TrustManager that validates the server certificate against a pinned
-     * SHA-256 fingerprint.
+     * Hostname verifier for pinned servers.
      *
-     * Rejects the connection if the leaf certificate's fingerprint does not
-     * match [pinnedSha256].
+     * Standard hostname check first. A certificate matching the pin is
+     * accepted whatever its CN/SAN, because untrusted signed certs often lack
+     * a matching hostname entry.
      */
-    private class CertificatePinningTrustManager(
+    internal class PinnedHostnameVerifier(
         private val pinnedSha256: String,
+        private val standard: HostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier(),
+    ) : HostnameVerifier {
+
+        override fun verify(hostname: String, session: SSLSession): Boolean {
+            if (standard.verify(hostname, session)) return true
+            val leaf = try {
+                session.peerCertificates.firstOrNull() as? X509Certificate
+            } catch (e: SSLException) {
+                null
+            }
+            return leaf != null && matchesPin(leaf, pinnedSha256)
+        }
+    }
+
+    /**
+     * TrustManager for pinned servers.
+     *
+     * Accepts a certificate that passes the platform's standard validation.
+     * Otherwise accepts it only if the leaf certificate's SHA-256 fingerprint
+     * matches [pinnedSha256].
+     */
+    internal class CertificatePinningTrustManager(
+        private val pinnedSha256: String,
+        private val platform: X509TrustManager? = platformTrustManager(),
     ) : X509TrustManager {
 
         override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
@@ -330,13 +356,15 @@ class PiHoleApiClient(
             if (chain.isEmpty()) {
                 throw CertificateException("Empty certificate chain")
             }
-            val leaf = chain[0]
-            val digest = MessageDigest.getInstance("SHA-256")
-            val sha256Bytes = digest.digest(leaf.encoded)
-            val certFingerprint = sha256Bytes.joinToString("") { "%02x".format(it) }
-            val normalizedPin = pinnedSha256.replace(":", "").lowercase().trim()
-
-            if (certFingerprint != normalizedPin) {
+            try {
+                if (platform != null) {
+                    platform.checkServerTrusted(chain, authType)
+                    return
+                }
+            } catch (e: CertificateException) {
+                // Not trusted by the platform: fall back to the pin.
+            }
+            if (!matchesPin(chain[0], pinnedSha256)) {
                 if (WidgetDebugConfig.DEBUG) {
                     // Only log fingerprints in debug builds to avoid exposing certificate details
                     Log.w(TAG, "Certificate pin mismatch")
@@ -347,4 +375,23 @@ class PiHoleApiClient(
 
         override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
     }
+}
+
+/** The platform's default trust manager, or null if none is available. */
+private fun platformTrustManager(): X509TrustManager? {
+    return try {
+        val factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+        factory.init(null as KeyStore?)
+        factory.trustManagers.filterIsInstance<X509TrustManager>().firstOrNull()
+    } catch (e: Exception) {
+        null
+    }
+}
+
+/** Whether the SHA-256 fingerprint of [cert] matches [pinnedSha256]. */
+internal fun matchesPin(cert: X509Certificate, pinnedSha256: String): Boolean {
+    val sha256Bytes = MessageDigest.getInstance("SHA-256").digest(cert.encoded)
+    val certFingerprint = sha256Bytes.joinToString("") { "%02x".format(it) }
+    val normalizedPin = pinnedSha256.replace(":", "").lowercase().trim()
+    return certFingerprint == normalizedPin
 }
